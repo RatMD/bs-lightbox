@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "alwaysStrict": false,
+        "baseUrl": ".",
+        "lib": [
+            "DOM", 
+            "ES5", 
+            "ES6",
+            "ES2016",
+            "ES2017",
+            "ES2018",
+            "ES2019"
+        ],
+        "locale": "en",
+        "moduleResolution": "node",
+        "newLine": "lf",
+        "paths": {
+            "rat.select": ["src/ts/index"]
+        },
+        "removeComments": true,
+        "sourceMap": true,
+        "target": "ES6"
+    },
+    "exclude": [
+        "./rollup.config.js",
+        "./dist/*"
+    ]
+}

@@ -1,0 +1,54 @@
+{
+    "name": "@rat.md/bs-lightbox",
+    "version": "1.0.0",
+    "description": "A Bootstrap 5 Lightbox system, based on the native Modal and Carousel abilities.",
+    "keywords": [
+        "bootstrap",
+        "bootstrap-plugin",
+        "lightbox",
+        "bs",
+        "rat"
+    ],
+    "author": "Sam <sam@rat.md> (https://rat.md)",
+    "license": "MIT",
+    "copyright": "rat.md <info@rat.md>",
+    "homepage": "https://rat.md",
+    "bugs": {
+        "url": "http://gitub.com/RatMD/bs-lightbox",
+        "email": "info@rat.md"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/RatMD/bs-lightbox.git"
+    },
+    "funding": [
+        {
+            "type": "buymeacoffee",
+            "url": "https://buymeacoff.ee/ratmd"
+        }
+    ],
+    "engines": {
+        "node": "^14.13.0"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "watch": "rollup -c --watch"
+    },
+    "main": "dist/js/rat.lightbox.js",
+    "module": "dist/es/rat.lightbox.js",
+    "browser": "dist/js/rat.lightbox.js",
+    "jsdeliver": "dist/js/rat.lightbox.js",
+    "typings": "",
+    "reveal": true,
+    "dependencies": {},
+    "devDependencies": {
+        "@rollup/plugin-replace": "^5.0.1",
+        "@rollup/plugin-typescript": "^9.0.2",
+        "bootstrap": "^5.2.2",
+        "rollup": "^3.2.5",
+        "rollup-plugin-consts": "^1.1.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "tslib": "^2.4.1",
+        "typescript": "^4.8.4"
+    }
+}

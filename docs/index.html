@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@rat.md / Bootstrap Lightbox</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/docs/assets/css/atom-one-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="/docs/assets/css/rat-demo.css" />
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../dist/js/rat.lightbox.min.js"></script>
+    <script type="text/javascript" src="/docs/assets/js/highlight.min.js"></script>
+    <script type="text/javascript" src="/docs/assets/js/rat-demo.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container py-3">
+            <a href="https://github.com/RatMD/bs-lightbox" class="navbar-brand d-flex align-items-center">
+                <svg width="100%" height="100%" viewBox="0 0 700 700" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><path d="M350,0c193.17,0 350,156.83 350,350c0,193.17 -156.83,350 -350,350c-193.17,0 -350,-156.83 -350,-350c0,-193.17 156.83,-350 350,-350Zm41.06,338.54l-39.746,-26.5l-137.8,60.625l0,191.43l290.5,0l48.258,-64.336l-49.707,-49.715l-111.505,-111.504Zm-244.05,-148c-10.109,13.895 -23.996,24.82 -40.223,31.215l92.734,302.62l-0,-156.28c-0,-0.09 0.051,-0.168 0.055,-0.266c0.027,-0.812 0.16,-1.625 0.484,-2.402c0.008,-0.019 0.008,-0.051 0.02,-0.07l47.723,-112.79l-100.793,-62.027Zm373.47,257.62l40.285,40.285l53.719,-71.625l-94.004,31.34Zm-157.75,-156.44l-60.605,-22.035c-2.141,-0.777 -3.758,-2.539 -4.359,-4.738l-15.68,-57.492l-62.25,147.14l142.894,-62.875Zm-173.708,6.37c-13.531,-0 -24.5,-10.969 -24.5,-24.5c-0,-13.531 10.969,-24.5 24.5,-24.5c13.531,-0 24.5,10.969 24.5,24.5c-0,13.531 -10.969,24.5 -24.5,24.5Zm188.588,-15.86l60.656,-146.32l-146.31,54.523l18.359,67.332l67.295,24.465Zm-243.93,-100.01l-48.152,-30.059l17.676,56.621c13.164,-4.766 24.035,-14.293 30.477,-26.562l-0.001,-0Z" style="fill:#f7df1e;"/></svg>
+                <span class="mx-2">/bs-lightbox</span>
+            </a>
+
+            <ul class="navbar-nav flex-row">
+                <li class="nav-item mx-2">
+                    <a href="/docs/index.html" class="nav-link active">Bootstrap 5</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a href="/docs/index.bs4.html" class="nav-link">Bootstrap 4</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="intro">
+        <div class="container d-flex py-5">
+            <div class="col-4 p-2">
+                <a href="/docs/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                    <img src="/docs/assets/imgs/demo-1.png" class="w-100 rounded-2" />
+                </a>
+            </div>
+
+            <div class="col-4 p-2">
+                <a href="/docs/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                    <img src="/docs/assets/imgs/demo-2.png" class="w-100 rounded-2" />
+                </a>
+            </div>
+
+            <div class="col-4 p-2">
+                <a href="/docs/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                    <img src="/docs/assets/imgs/demo-3.png" class="w-100 rounded-2" />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container d-flex">
+        <aside class="col-3 bg-light py-5">
+            <ul class="w-100">
+                <li class="w-100 pe-5">
+                    <div class="d-flex align-items-center w-100">
+                        <a href="#getting_started" class="d-flex align-items-center me-auto">
+                            <span>Getting Started</span>
+                        </a>
+
+                        <span class="d-flex align-items-center justify-content-center cursor-pointer" data-bs-toggle="collapse" data-bs-target="#sidebarMenuGettingStarted">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <ul id="sidebarMenuGettingStarted" class="collapse">
+                        <li><a href="#requirements">Requirements</a></li>
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="#basic_usage">Basic Usage</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#usage_examples">Usage & Examples</a>
+
+                    <ul>
+                        <li><a href="#supported_variations">Supported Variations</a></li>
+                        <li><a href="#lightbox_gallery">Lightbox Gallery</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#configuration">Configuration</a>
+
+                    <ul>
+                        <li>
+                            <a href="#carousel_options">Carousel Options</a>
+                        </li>
+                        <li>
+                            <a href="#modal_options">Modal Options</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="methods">Methods</a>
+
+                    <ul>
+                        <li><a href="#method_invoke">Lightbox.invoke</a></li>
+                        <li><a href="#method_has_instance">Lightbox.hasInstance</a></li>
+                        <li><a href="#method_get_instance">Lightbox.getInstance</a></li>
+                        <li><a href="#method_create_instance">Lightbox.getOrCreateInstance</a></li>
+                        <li><a href="#method_dispose">&lt;lightbox&gt;.dispose</a></li>
+                        <li><a href="#method_append">&lt;lightbox&gt;.append</a></li>
+                        <li><a href="#method_toggle">&lt;lightbox&gt;.toggle</a></li>
+                        <li><a href="#method_show">&lt;lightbox&gt;.show</a></li>
+                        <li><a href="#method_hide">&lt;lightbox&gt;.hide</a></li>
+                        <li><a href="#method_cycle">&lt;lightbox&gt;.cycle</a></li>
+                        <li><a href="#method_next">&lt;lightbox&gt;.next</a></li>
+                        <li><a href="#method_prev">&lt;lightbox&gt;.prev</a></li>
+                        <li><a href="#method_to">&lt;lightbox&gt;.to</a></li>
+                        <li><a href="#method_on">&lt;lightbox&gt;.on</a></li>
+                        <li><a href="#method_off">&lt;lightbox&gt;.off</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#events">Events</a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="col-9 p-5">
+            <div class="row">
+                <h1 id="home">@rat.md/bs-lightbox</h1>
+                <p class="lead p-5 bg-light my-4">
+                    A simple and ease-to-use <strong>Lightbox</strong> system build on top of Bootstrap's native 
+                    Carousel and Modal JavaScript components. <strong>bs-lightbox</strong> is compatible 
+                    with Bootstrap v4 and Bootstrap v5.
+                </p>
+
+                <h2 id="getting_started">Getting Started</h2>
+                <p>
+                    Our <strong>bs-lightbox</strong> package depends on the Bootstrap CSS and JS framework, especially 
+                    the Carousel and Modal components. Since this package does not provide a bundled version you've to 
+                    ensure yourself that the Bootstrap framework is added to your HTML document and loaded BEFORE the 
+                    <strong>bs-lightbox</strong> JavaScript.
+                </p>
+                <p>
+                    <strong>bs-lightbox</strong> does also not provide any stylings or stylesheets but uses and depends 
+                    on the Bootstrap native CSS components and utility classes. You don't have to worry, when you're using 
+                    the already bundled distribution files - provided on getbootstrap.com. Only if you're using the 
+                    Bootstrap source files, you've to make sure, that the default utility classes as well as the Carousel 
+                    and Modal components are loaded and included in your bundled stylesheet.
+                </p>
+
+                <h3 id="requirements">Requirements</h3>
+                <p>
+                    <strong>bs-lightbox</strong> has been especially designed for Bootstrap v5 and provides a working 
+                    backward compatibility to Bootstrap v4. Older versions of Bootstrap may work with this plugin, but 
+                    aren't supported nor tested.
+                </p>
+
+                <h3 id="installation">Installation</h3>
+                <p>
+                    You can download and embed the latest <strong>bs-lightbox</strong> version on the 
+                    <a href="https://github.com/RatMD/bs-lightbox" target="_blank">official GitHub Repository</a>. Otherwise 
+                    you can also use node.js and NPM, to include this package in your bundle / stack.
+                </p>
+
+                <pre><code class="language-bash">npm i @rat.md/bs-lightbox</code></pre>
+
+                <h3 id="basic_usage">Basic Usage</h3>
+                <p>
+                    You can use <strong>bs-lightbox</strong> similar to many other different JavaScript packages. The 
+                    following example code shows how to load and invoke the UMD bundle in the most basic way.
+                </p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="assets/css/bootstrap.min.css" /&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;script src="assets/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+        &lt;script src="assets/js/rat.lightbox.min.js"&gt;&lt;/script&gt;
+        &lt;script&gt;
+            document.addEventListener('DOMContentLoaded', () => {
+                rat.Lightbox.invoke();
+            });
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                <p>
+                    The <code>rat.Lightbox.invoke()</code> method will fetch all supported elements, which has either 
+                    the <code>data-bs-toggle="lightbox"</code>, <code>data-toggle="lightbox"</code> or <code>data-rat-lightbox</code>
+                    attribute on it. However, you can also pass your own selector string to the <code>.invoke</code> method, or pass 
+                    your options as second parameter (Read more about the <a href="#configuration">Configurations here</a>).
+                </p>
+<pre><code class="language-javascript">
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Invoke using a custom selector
+    rat.Lightbox.invoke('[data-custom-lightbox]');
+
+    // Invoke using custom configuration and the default selector
+    rat.Lightbox.invoke(null, {
+        carousel: {
+            ride: true
+        },
+        modal: {
+            size: 'fullscreen'
+        }
+    });
+
+});</code></pre>
+
+                <p>
+                    <strong>bs-lightbox</strong> will create a new Lightbox instance for each image, unless the items 
+                    are grouped using the <code>data-bs-gallery</code> or <code>data-gallery</code> attribute, 
+                    <a href="#lightbox_gallery">as described here</a>. You can also add new images using the 
+                    <code>getOrCreateInstance</code> or the Lightbox <code>constructor</code> method itself. However, we 
+                    recommend using <code>getOrCreateInstance</code> to keep the gallery grouping alive and prevent 
+                    throwing errors on images, which are already included in a Lightbox or Lightbox Set. 
+                </p>
+<pre><code class="language-javascript">
+document.addEventListener('DOMContentLoaded', () => {
+
+    let element = document.querySelector('img.some-special-image');
+
+    // Creates a new Lightbox, or throws an Error when the image 
+    // is already included in another Lightbox.
+
+    let lightbox = new rat.Lightbox(element, /* Custom Configuration */);
+
+
+    // Create a new Lightbox or returns an existing Lightbox 
+    // Appends the image on grouped lightbox instances
+    
+    let lightbox = rat.Lightbox.getOrCreateInstance(element);
+
+});</code></pre>
+                
+                <h2 id="usage_examples">Usage & Examples</h2>
+                <p>
+                    <strong>bs-lightbox</strong> uses the <code>data-bs-toggle="lightbox"</code> (alternatively also <code>data-toggle="lightbox"</code>
+                    or <code>data-rat-lightbox</code>) attribute to find the nearest <code>&lt;picture /&gt;</code> or 
+                    <code>&lt;img /&gt;</code> element (which must either the linked one or one of it's children). Thus, the most 
+                    basic way to add a lightbox to your image is by following the syntax below. However, <strong>bs-lightbox</strong>
+                    does also support sightly different variations, as described in the chapter below.
+                </p>
+
+                <div class="alert alert-primary">
+                    When a <code>&lt;picture /&gt;</code> or <code>&lt;img /&gt;</code>
+                    Element has been found, <strong>bs-lightbox</strong> will deep-clone the whole node and remove the class names on the 
+                    main element ... and only on the main element. So, if you've a picture > img construct, you should style your 
+                    <code>&lt;picture /&gt;</code> element and set the height / width of the child <code>&lt;img /&gt;</code> node to 100%.
+                </div>
+
+                <div class="example rounded-2">
+                    <div class="demo">
+                        <div class="mb-3 d-flex justify-content-center">
+                            <img src="/docs/assets/imgs/demo-4.jpg" data-bs-toggle="lightbox" class="w-25 d-block" />
+                        </div>
+
+                        <div class="mb-3 d-flex justify-content-center">
+                            <picture data-bs-toggle="lightbox" class="w-25 d-block">
+                                <img src="/docs/assets/imgs/demo-5.jpg" class="w-100" />
+                            </picture>
+                        </div>
+
+                        <p class="text-muted mt-5">
+                            <small>Even if the pictures above aren't linked, you're still able to click on them to open the Lightbox.</small>
+                        </p>
+                    </div>
+<pre><code class="language-html">&lt;div class="mb-3 d-flex justify-content-center"&gt;
+    &lt;img src="/docs/assets/imgs/demo-4.jpg" data-bs-toggle="lightbox" class="w-25 d-block" /&gt;
+&lt;/div&gt;
+
+&lt;div class="mb-3 d-flex justify-content-center"&gt;
+    &lt;picture data-bs-toggle="lightbox" class="w-25 d-block"&gt;
+        &lt;img src="/docs/assets/imgs/demo-5.jpg" class="w-100" /&gt;
+    &lt;/picture&gt;
+&lt;/div&gt;
+
+&lt;p class="text-muted mt-5"&gt;
+    ...
+&lt;/p&gt;</code></pre>
+                </div>
+                
+                <h3 id="supported_variations">Supported Variations</h3>
+                <p>
+                    <b>bs-lightbox</b> also supports different formatting variations, which allows to change the 
+                    image shown on the modal-carousel and also to add an optional title or caption.
+                </p>
+
+                <h4>Simple Link</h4>
+                <p>
+                    Using a link as parent element allows to change the URL on an <code>&lt;img /&gt;</code> element, 
+                    for example to provide a higher resolution version of the same (or a different) image. This does <b>NOT</b> 
+                    work when using a <code>&lt;picture /&gt;</code> element - in this case you should rely on the HTML native 
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source" target="_blank">&lt;source&gt;</a> 
+                    element.
+                </p>
+                <div class="example rounded-2">
+                    <div class="demo">
+                        <a href="/docs/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                            <img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block" />
+                        </a>
+                        
+                        <a href="/docs/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                            <picture class="w-25 d-block">
+                                <img src="/docs/assets/imgs/demo-5.jpg" class="w-100" />
+                            </picture>
+                        </a>
+
+                        <p class="text-muted mt-5">
+                            <small>Both links above point to the opposite picture, however just the first one works due to the &lt;img /&gt; element.</small>
+                        </p>
+                    </div>
+<pre><code class="language-html">&lt;a href="/docs/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+    &lt;img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block" /&gt;
+&lt;/a&gt;
+
+&lt;a href="/docs/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+    &lt;picture class="w-25 d-block"&gt;
+        &lt;img src="/docs/assets/imgs/demo-5.jpg" class="w-100" /&gt;
+    &lt;/picture&gt;
+&lt;/a&gt;
+
+&lt;p class="text-muted mt-5"&gt;
+    ...
+&lt;/p&gt;</code></pre>
+                </div>
+
+                <h4>Title & Caption</h4>
+                <p>
+                    Since <strong>bs-lightbox</strong> using the official Bootstrap Carousel component, you can also add an own title 
+                    and caption to the respective image. Just add the <code>data-bs-title</code> / <code>data-bs-caption</code> attributes 
+                    or their alternative version <code>data-title</code> / <code>data-caption</code> on the desired picture.
+                </p>
+                <div class="example rounded-2">
+                    <div class="demo">
+                        <a href="/docs/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption">
+                            <img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block" />
+                        </a>
+                        
+                        <a href="/docs/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                            <picture class="w-25 d-block" data-title="Title" data-caption="Caption">
+                                <img src="/docs/assets/imgs/demo-5.jpg" class="w-100" />
+                            </picture>
+                        </a>
+
+                        <p class="text-muted mt-5">
+                            <small>The attributes can either be set on the same element or on the &lt;picture&gt; / &lt;img /&gt; one.</small>
+                        </p>
+                    </div>
+<pre><code class="language-html">&lt;a href="/docs/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" 
+    data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption"&gt;
+    &lt;img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block" /&gt;
+&lt;/a&gt;
+
+&lt;a href="/docs/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+    &lt;picture class="w-25 d-block" data-title="Title" data-caption="Caption"&gt;
+        &lt;img src="/docs/assets/imgs/demo-5.jpg" class="w-100" /&gt;
+    &lt;/picture&gt;
+&lt;/a&gt;
+
+&lt;p class="text-muted mt-5"&gt;
+    ...
+&lt;/p&gt;</code></pre>
+                </div>
+
+                <h4>Figure & Figcaption</h4>
+                <p>
+                    Alternatively to the data-attributes above, you can also use the <code>&lt;figure&gt;</code> and 
+                    <code>&lt;figcaption&gt;</code> elements, which allows to show the caption outside the Lightbox as well.
+                </p>
+
+                <div class="example rounded-2">
+                    <div class="demo">
+                        <figure class="figure d-flex flex-column align-items-center" data-bs-toggle="lightbox" data-bs-title="Title">
+                            <img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block figure-img" />
+                            <figcaption>Caption</figcaption>
+                        </figure>
+
+                        <figure class="figure d-flex flex-column align-items-center" data-bs-toggle="lightbox" data-title="Title">
+                            <picture class="w-25 d-block figure-img">
+                                <img src="/docs/assets/imgs/demo-5.jpg" class="w-100" />
+                            </picture>
+                            <figcaption>Caption</figcaption>
+                        </figure>
+                    </div>
+<pre><code class="language-html">&lt;figure class="figure" data-bs-toggle="lightbox" data-bs-title="Title"&gt;
+    &lt;img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block figure-img" /&gt;
+    &lt;figcaption&gt;Caption&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure class="figure" data-bs-toggle="lightbox" data-title="Title"&gt;
+    &lt;picture class="w-25 d-block figure-img"&gt;
+        &lt;img src="/docs/assets/imgs/demo-5.jpg" class="w-100" /&gt;
+    &lt;/picture&gt;
+    &lt;figcaption&gt;Caption&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+                </div>
+
+                <h3 id="lightbox_gallery">Lightbox Gallery</h3>
+                <p>
+                    A Lightbox / Carousel without the possibility to collect and slide through a bunch of pictures 
+                    is absolutely useless. Thus, <strong>bs-lightbox</strong> provides the <code>data-bs-gallery</code> 
+                    (or alternatively <code>data-gallery</code>) attribute, which allows to group different pictures 
+                    all over the whole document and shows them all together. 
+                </p>
+
+                <div class="example rounded-2">
+                    <div class="demo">
+                        <div class="row">
+                            <div class="col-4 p-2">
+                                <a href="/docs/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                                    <img src="/docs/assets/imgs/demo-1.png" class="w-100 rounded-2" />
+                                </a>
+                            </div>
+
+                            <div class="col-4 p-2">
+                                <a href="/docs/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                                    <img src="/docs/assets/imgs/demo-2.png" class="w-100 rounded-2" />
+                                </a>
+                            </div>
+
+                            <div class="col-4 p-2">
+                                <a href="/docs/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                                    <img src="/docs/assets/imgs/demo-3.png" class="w-100 rounded-2" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+<pre><code class="language-html">&lt;div class="row"&gt;
+    &lt;div class="col-4 p-2"&gt;
+        &lt;a href="/docs/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+            &lt;img src="/docs/assets/imgs/demo-1.png" class="w-100 rounded-2" /&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;div class="col-4 p-2"&gt;
+        &lt;a href="/docs/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+            &lt;img src="/docs/assets/imgs/demo-2.png" class="w-100 rounded-2" /&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;div class="col-4 p-2"&gt;
+        &lt;a href="/docs/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+            &lt;img src="/docs/assets/imgs/demo-3.png" class="w-100 rounded-2" /&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                
+                <h2 id="configuration">Configuration</h2>
+                <p>
+                    <strong>bs-lightbox</strong> gives you the full control over the used Carousel and Modal instances,
+                    just pass the desired options as second parameter on the Lightbox <code>constructor</code>, the  
+                    recommended <code>getOrCreateInstance</code> or the general <code>invoke</code> method.
+                </p>
+<pre><code class="language-javascript">rat.Lightbox.invoke(
+    null,       // Use default selector string
+    {
+        carousel: {
+            id: null,
+            controls: true,
+            indicators: false,
+            interval: 5000,
+            keyboard: false,
+            pause: 'hover',
+            ride: false,
+            touch: true,
+            wrap: true
+        },
+        modal: {
+            id: null,
+            backdrop: true,
+            focus: true,
+            keyboard: true,
+            size: 'xl'
+        }
+    }
+);</code></pre>
+
+                <h3 id="carousel_options">Carousel Options</h3>
+                <p>
+                    You may recognize a few of the available Carousel options 
+                    <a href="https://getbootstrap.com/docs/5.2/components/carousel/#options" target="_blank">from the official Bootstrap documentation</a>.
+                </p>
+
+                <table class="table fs-7">
+                    <thead>
+                        <tr>
+                            <th width="100px">Option</th>
+                            <th width="100px">Type</th>
+                            <th width="175px">Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>id</th>
+                            <td><code>string</code></td>
+                            <td><code>"lightboxCarousel"</code></td>
+                            <td>Set a custom id value for the carousel element.</td>
+                        </tr>
+                        <tr>
+                            <th>controls</th>
+                            <td><code>boolean</code></td>
+                            <td><code>true</code></td>
+                            <td>
+                                Whether the carousel control action buttons, for sliding to the next or previous item, should be shown or not. 
+                                When only one slide is available, the control buttons will be hidden regardless of this value.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>indicators</th>
+                            <td><code>boolean</code></td>
+                            <td><code>false</code></td>
+                            <td>
+                                Whether the carousel indicator buttons should be shown or not. 
+                                When only one slide is available, the indicator buttons will be hidden regardless of this value.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>interval</th>
+                            <td><code>number</code></td>
+                            <td><code>5000</code></td>
+                            <td>
+                                The amount of time in milliseconds to delay between automatically cycling an item.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>keyboard</th>
+                            <td><code>boolean</code></td>
+                            <td><code>true</code></td>
+                            <td>
+                                Whether the carousel should react to keyboard events or not (left / right button).
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>pause</th>
+                            <td><code>boolean</code><br/><code>"hover"</code></td>
+                            <td><code>"hover"</code></td>
+                            <td>
+                                Whether the carousel should pause on mouse and touch-events or not.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>ride</th>
+                            <td><code>boolean</code><br/><code>"carousel"</code></td>
+                            <td><code>false</code></td>
+                            <td>
+                                Whether the carousel should autoplay or not. <code>"carousel"</code> starts the 
+                                autoplay of the carousel automatically, using <code>true</code> will autoplay 
+                                after the user manually cycles the first item, <code>false</code> disables the 
+                                autoplay completely.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>touch</th>
+                            <td><code>boolean</code></td>
+                            <td><code>true</code></td>
+                            <td>
+                                Whether the carousel should support left/right swipe interactions on touchscreen devices.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>wrap</th>
+                            <td><code>boolean</code></td>
+                            <td><code>true</code></td>
+                            <td>
+                                Whether the carousel should cycle continuously or have hard stops
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="modal_options">Modal Options</h3>
+                <p>
+                    You may recognize a few of the available Modal options 
+                    <a href="https://getbootstrap.com/docs/5.2/components/modal/#options" target="_blank">from the official Bootstrap documentation</a>.
+                </p>
+                
+                <table class="table fs-7">
+                    <thead>
+                        <tr>
+                            <th width="100px">Option</th>
+                            <th width="100px">Type</th>
+                            <th width="175px">Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>id</th>
+                            <td><code>string</code></td>
+                            <td><code>"lightboxModal"</code></td>
+                            <td>Set a custom id value for the lightbox modal.</td>
+                        </tr>
+                        <tr>
+                            <th>backdrop</th>
+                            <td><code>boolean</code><br/><code>"static"</code></td>
+                            <td><code>true</code></td>
+                            <td>
+                                Includes a modal-backdrop element. Alternatively, specify <code>static</code> for a backdrop 
+                                which doesn't close the modal when clicked.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>focus</th>
+                            <td><code>boolean</code></td>
+                            <td><code>true</code></td>
+                            <td>
+                                Puts the focus on the modal when initialized.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>keyboard</th>
+                            <td><code>boolean</code></td>
+                            <td><code>true</code></td>
+                            <td>
+                                Closes the modal when escape key is pressed.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>size</th>
+                            <td><code>string</code></td>
+                            <td><code>"xl"</code></td>
+                            <td>
+                                Sets the size of the modal, supports the following sizes: 
+                                <code>"sm"</code>, <code>"md"</code>, <code>"lg"</code>, <code>"xl"</code> and  <code>"fullscreen"</code>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 id="methods">Methods</h2>
+                <p>
+                    The current version of <strong>bs-lightbox</strong> provides the following Methods.
+                </p>
+
+                <h3 id="method_invoke">Lightbox.invoke()</h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.invoke(selector: null|string = null, config: object = {}): Lightbox[]</code></pre>
+                <p>
+                    Invokes the Lightbox instances on all capable elements within the current DOM. This method supports 
+                    2 optional parameters: <code>selector</code> allows to change the default selector string used to 
+                    find valid Lightbox candidates, <code>config</code> allows to override the default set of options to 
+                    configure each single Lightbox instance.
+                </p>
+
+                <h3 id="method_has_instance">Lightbox.hasInstance()</h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.hasInstance(data: HTMLElement|string): boolean</code></pre>
+                <p>
+                    Checks if the passed HTMLElement or gallery string identifier has already been invoked within a 
+                    Lightbox instance. <b>Attention:</b> This method does NOT verify if the passed HTMLElement is or 
+                    could be a valid Lightbox candidate, it just checks if an instance has been assigned with it.
+                </p>
+
+                <h3 id="method_get_instance">Lightbox.getInstance()</h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.getInstance(data: HTMLElement|string): Lightbox|null</code></pre>
+                <p>
+                    Receive an already invoked Lightbox instance using the respective HTMLElement or a gallery string 
+                    identifier. This method returns <code>null</code> if the passed argument is not assigned with a 
+                    Lightbox instance. <b>Attention:</b> This method does NOT verify if the passed HTMLElement is or 
+                    could be a valid Lightbox candidate, it just checks if an instance has been assigned with it.
+                </p>
+
+                <h3 id="method_create_instance">Lightbox.getOrCreateInstance()</h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.getOrCreateInstance(element: HTMLElement, config: object: = {}): Lightbox</code></pre>
+                <p>
+                    Receive or create a new Lightbox instance, based on the desired HTMLElement. The second parameter 
+                    <code>config</code> is only used when this method invokes a new Lightbox instance, the options of 
+                    existing Lightbox instances stay the same. When the element has a gallery string identifier - which 
+                    has already been invoked - the element will be appended to this instance.
+                </p>
+
+                <h3 id="method_create_instance">Lightbox.constructor()</h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.constructor(element: HTMLElement, config: object: = {}): Lightbox</code></pre>
+                <p>
+                    Create a new Lightbox instance. This method will throw an <code>Error</code>, when the passed element 
+                    is already be part of an Lightbox instance. We recommend using <code>getOrCreateInstance</code> to 
+                    prevent this.
+                </p>
+
+                <h3 id="method_dispose"><code>&lt;lightbox&gt;</code>.dispose()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.dispose(): Lightbox</code></pre>
+                <p>
+                    Destroys the Carousel and Modal bootstrap instances - by calling their own <code>dispose</code>
+                    method, and will clear the core Lightbox element. The Lightbox instance itself stays available, 
+                    with all configurations and native event listeners. This method is used internally, when an open 
+                    Lightbox closes.
+                </p>
+
+                <h3 id="method_append"><code>&lt;lightbox&gt;</code><span class="fs-4">.append()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.append(source: HTMLElement): Lightbox</code></pre>
+                <p>
+                    Appends a new image to the same Lightbox instance. This method checks if the passed HTMLElement 
+                    is a valid Lightbox candidate, if not it throws an error. Using <code>append</code> allows to 
+                    create Lightbox galleries, and is used internally by the <code>getOrCreateInstance</code> method.
+                </p>
+
+
+                <h3 id="method_toggle"><code>&lt;lightbox&gt;</code><span class="fs-4">.toggle()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.toggle(): Lightbox</code></pre>
+                <p>
+                    Calls the <code>.show()</code> or <code>.hide()</code> method, depending if the Lightbox is 
+                    currently shown or not.
+                </p>
+
+                <h3 id="method_show"><code>&lt;lightbox&gt;</code><span class="fs-4">.show()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.show(): Lightbox</code></pre>
+                <p>
+                    Creates the Lightbox modal HTML structure, applies the Modal and Carousel instances, binds 
+                    all native as well as custom events, adds this whole construct to the DOM and starts the modal 
+                    itself. This method does nothing, when the Lightbox Modal is already available. 
+                </p>
+
+                <h3 id="method_hide"><code>&lt;lightbox&gt;</code><span class="fs-4">.hide()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.hide(): Lightbox</code></pre>
+                <p>
+                    Simple hides the Lightbox modal, when available, otherwise does nothing.
+                </p>
+
+                <h3 id="method_cycle"><code>&lt;lightbox&gt;</code><span class="fs-4">.cycle()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.cycle(): Lightbox</code></pre>
+                <p>
+                    Calls the <code>.cycle()</code> method on the Carousel instance, when available.
+                </p>
+
+                <h3 id="method_next"><code>&lt;lightbox&gt;</code><span class="fs-4">.next()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.next(): Lightbox</code></pre>
+                <p>
+                    Calls the <code>.next()</code> method on the Carousel instance, when available.
+                </p>
+
+                <h3 id="method_prev"><code>&lt;lightbox&gt;</code><span class="fs-4">.prev()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.prev(): Lightbox</code></pre>
+                <p>
+                    Calls the <code>.prev()</code> method on the Carousel instance, when available.
+                </p>
+
+                <h3 id="method_to"><code>&lt;lightbox&gt;</code><span class="fs-4">.to()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.to(direction: number|string): Lightbox</code></pre>
+                <p>
+                    Allows to slide to a specific position within the Carousel instance. <code>direction</code> 
+                    can either be an exact slide number (starting from 0) or one of the following strings: 
+                    "next", "prev" or "previous".
+                </p>
+
+                <h3 id="method_on"><code>&lt;lightbox&gt;</code><span class="fs-4">.on()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.on(event: string, caller: Function): Lightbox</code></pre>
+                <p>
+                    Attach an event listener to the modal or carousel. Currently supported events are: 
+                    "slid.bs.carousel", "slide.bs.carousel", "hide.bs.modal", "hidden.bs.modal", "show.bs.modal" and
+                    "shown.bs.modal". The event listener is stored internally and attached every time, when then 
+                    Lightbox' <code>.show()</code> method is called.
+                </p>
+
+                <h3 id="method_off"><code>&lt;lightbox&gt;</code><span class="fs-4">.off()</span></h3>
+                <b>Signature</b>
+                <pre><code class="language-typescript">rat.Lightbox.off(event: string, caller: Function): Lightbox</code></pre>
+                <p>
+                    Removes an event listener (as attached by the own <code>.on()</code> method) and detach it from 
+                    the Carousel or Modal instance when the Lightbox is currently shown.
+                </p>
+
+                <h2 id="events">Events</h2>
+                <p>
+                    The current version of <strong>bs-lightbox</strong> does not provide own events, however using the 
+                    <code>.on()</code> method allows you to attach all available, Bootstrap-native Carousel and Modal 
+                    events as described below.
+                </p>
+
+                <table class="table fs-7">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>slid.bs.carousel</code></td>
+                            <td>Fired when the carousel has completed its slide transition.</td>
+                        </tr>
+                        <tr>
+                            <td><code>slide.bs.carousel</code></td>
+                            <td>Fires immediately when the Carousel <code>slide</code> instance method is invoked.</td>
+                        </tr>
+                        <tr>
+                            <td><code>hide.bs.modal</code></td>
+                            <td>This event is fired immediately when the <code>hide</code> instance method has been called.</td>
+                        </tr>
+                        <tr>
+                            <td><code>hidden.bs.modal</code></td>
+                            <td>This event is fired when the modal has finished being hidden from the user (will wait for CSS transitions to complete).</td>
+                        </tr>
+                        <tr>
+                            <td><code>hidePrevented.bs.modal</code></td>
+                            <td>This event is fired when the modal is shown, its backdrop is <code>static</code> and a click outside of the modal is performed. The event is also fired when the escape key is pressed and the <code>keyboard</code> option is set to <code>false</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>show.bs.modal</code></td>
+                            <td>This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+                        </tr>
+                        <tr>
+                            <td><code>shown.bs.modal</code></td>
+                            <td>This event is fired when the modal has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
