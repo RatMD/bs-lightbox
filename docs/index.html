@@ -7,13 +7,13 @@
     <title>@rat.md / Bootstrap Lightbox</title>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/docs/assets/css/atom-one-light.min.css" />
-    <link rel="stylesheet" type="text/css" href="/docs/assets/css/rat-demo.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/atom-one-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/rat-demo.css" />
     
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../dist/js/rat.lightbox.min.js"></script>
-    <script type="text/javascript" src="/docs/assets/js/highlight.min.js"></script>
-    <script type="text/javascript" src="/docs/assets/js/rat-demo.js"></script>
+    <script type="text/javascript" src="/assets/js/highlight.min.js"></script>
+    <script type="text/javascript" src="/assets/js/rat-demo.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
@@ -25,10 +25,10 @@
 
             <ul class="navbar-nav flex-row">
                 <li class="nav-item mx-2">
-                    <a href="/docs/index.html" class="nav-link active">Bootstrap 5</a>
+                    <a href="/index.html" class="nav-link active">Bootstrap 5</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a href="/docs/index.bs4.html" class="nav-link">Bootstrap 4</a>
+                    <a href="/index.bs4.html" class="nav-link">Bootstrap 4</a>
                 </li>
             </ul>
         </div>
@@ -37,20 +37,20 @@
     <div class="intro">
         <div class="container d-flex py-5">
             <div class="col-4 p-2">
-                <a href="/docs/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
-                    <img src="/docs/assets/imgs/demo-1.png" class="w-100 rounded-2" />
+                <a href="/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                    <img src="/assets/imgs/demo-1.png" class="w-100 rounded-2" />
                 </a>
             </div>
 
             <div class="col-4 p-2">
-                <a href="/docs/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
-                    <img src="/docs/assets/imgs/demo-2.png" class="w-100 rounded-2" />
+                <a href="/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                    <img src="/assets/imgs/demo-2.png" class="w-100 rounded-2" />
                 </a>
             </div>
 
             <div class="col-4 p-2">
-                <a href="/docs/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
-                    <img src="/docs/assets/imgs/demo-3.png" class="w-100 rounded-2" />
+                <a href="/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                    <img src="/assets/imgs/demo-3.png" class="w-100 rounded-2" />
                 </a>
             </div>
         </div>
@@ -258,12 +258,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="example rounded-2">
                     <div class="demo">
                         <div class="mb-3 d-flex justify-content-center">
-                            <img src="/docs/assets/imgs/demo-4.jpg" data-bs-toggle="lightbox" class="w-25 d-block" />
+                            <img src="/assets/imgs/demo-4.jpg" data-bs-toggle="lightbox" class="w-25 d-block" />
                         </div>
 
                         <div class="mb-3 d-flex justify-content-center">
                             <picture data-bs-toggle="lightbox" class="w-25 d-block">
-                                <img src="/docs/assets/imgs/demo-5.jpg" class="w-100" />
+                                <img src="/assets/imgs/demo-5.jpg" class="w-100" />
                             </picture>
                         </div>
 
@@ -272,12 +272,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         </p>
                     </div>
 <pre><code class="language-html">&lt;div class="mb-3 d-flex justify-content-center"&gt;
-    &lt;img src="/docs/assets/imgs/demo-4.jpg" data-bs-toggle="lightbox" class="w-25 d-block" /&gt;
+    &lt;img src="/assets/imgs/demo-4.jpg" data-bs-toggle="lightbox" class="w-25 d-block" /&gt;
 &lt;/div&gt;
 
 &lt;div class="mb-3 d-flex justify-content-center"&gt;
     &lt;picture data-bs-toggle="lightbox" class="w-25 d-block"&gt;
-        &lt;img src="/docs/assets/imgs/demo-5.jpg" class="w-100" /&gt;
+        &lt;img src="/assets/imgs/demo-5.jpg" class="w-100" /&gt;
     &lt;/picture&gt;
 &lt;/div&gt;
 
@@ -297,18 +297,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     Using a link as parent element allows to change the URL on an <code>&lt;img /&gt;</code> element, 
                     for example to provide a higher resolution version of the same (or a different) image. This does <b>NOT</b> 
                     work when using a <code>&lt;picture /&gt;</code> element - in this case you should rely on the HTML native 
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source" target="_blank">&lt;source&gt;</a> 
+                    <a href="https://developer.mozilla.org/en-US/Web/HTML/Element/source" target="_blank">&lt;source&gt;</a> 
                     element.
                 </p>
                 <div class="example rounded-2">
                     <div class="demo">
-                        <a href="/docs/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
-                            <img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block" />
+                        <a href="/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                            <img src="/assets/imgs/demo-4.jpg" class="w-25 d-block" />
                         </a>
                         
-                        <a href="/docs/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                        <a href="/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
                             <picture class="w-25 d-block">
-                                <img src="/docs/assets/imgs/demo-5.jpg" class="w-100" />
+                                <img src="/assets/imgs/demo-5.jpg" class="w-100" />
                             </picture>
                         </a>
 
@@ -316,13 +316,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             <small>Both links above point to the opposite picture, however just the first one works due to the &lt;img /&gt; element.</small>
                         </p>
                     </div>
-<pre><code class="language-html">&lt;a href="/docs/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
-    &lt;img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block" /&gt;
+<pre><code class="language-html">&lt;a href="/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+    &lt;img src="/assets/imgs/demo-4.jpg" class="w-25 d-block" /&gt;
 &lt;/a&gt;
 
-&lt;a href="/docs/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+&lt;a href="/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
     &lt;picture class="w-25 d-block"&gt;
-        &lt;img src="/docs/assets/imgs/demo-5.jpg" class="w-100" /&gt;
+        &lt;img src="/assets/imgs/demo-5.jpg" class="w-100" /&gt;
     &lt;/picture&gt;
 &lt;/a&gt;
 
@@ -339,13 +339,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 </p>
                 <div class="example rounded-2">
                     <div class="demo">
-                        <a href="/docs/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption">
-                            <img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block" />
+                        <a href="/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption">
+                            <img src="/assets/imgs/demo-4.jpg" class="w-25 d-block" />
                         </a>
                         
-                        <a href="/docs/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                        <a href="/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
                             <picture class="w-25 d-block" data-title="Title" data-caption="Caption">
-                                <img src="/docs/assets/imgs/demo-5.jpg" class="w-100" />
+                                <img src="/assets/imgs/demo-5.jpg" class="w-100" />
                             </picture>
                         </a>
 
@@ -353,14 +353,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             <small>The attributes can either be set on the same element or on the &lt;picture&gt; / &lt;img /&gt; one.</small>
                         </p>
                     </div>
-<pre><code class="language-html">&lt;a href="/docs/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" 
+<pre><code class="language-html">&lt;a href="/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" 
     data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption"&gt;
-    &lt;img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block" /&gt;
+    &lt;img src="/assets/imgs/demo-4.jpg" class="w-25 d-block" /&gt;
 &lt;/a&gt;
 
-&lt;a href="/docs/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+&lt;a href="/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
     &lt;picture class="w-25 d-block" data-title="Title" data-caption="Caption"&gt;
-        &lt;img src="/docs/assets/imgs/demo-5.jpg" class="w-100" /&gt;
+        &lt;img src="/assets/imgs/demo-5.jpg" class="w-100" /&gt;
     &lt;/picture&gt;
 &lt;/a&gt;
 
@@ -378,25 +378,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="example rounded-2">
                     <div class="demo">
                         <figure class="figure d-flex flex-column align-items-center" data-bs-toggle="lightbox" data-bs-title="Title">
-                            <img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block figure-img" />
+                            <img src="/assets/imgs/demo-4.jpg" class="w-25 d-block figure-img" />
                             <figcaption>Caption</figcaption>
                         </figure>
 
                         <figure class="figure d-flex flex-column align-items-center" data-bs-toggle="lightbox" data-title="Title">
                             <picture class="w-25 d-block figure-img">
-                                <img src="/docs/assets/imgs/demo-5.jpg" class="w-100" />
+                                <img src="/assets/imgs/demo-5.jpg" class="w-100" />
                             </picture>
                             <figcaption>Caption</figcaption>
                         </figure>
                     </div>
 <pre><code class="language-html">&lt;figure class="figure" data-bs-toggle="lightbox" data-bs-title="Title"&gt;
-    &lt;img src="/docs/assets/imgs/demo-4.jpg" class="w-25 d-block figure-img" /&gt;
+    &lt;img src="/assets/imgs/demo-4.jpg" class="w-25 d-block figure-img" /&gt;
     &lt;figcaption&gt;Caption&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;figure class="figure" data-bs-toggle="lightbox" data-title="Title"&gt;
     &lt;picture class="w-25 d-block figure-img"&gt;
-        &lt;img src="/docs/assets/imgs/demo-5.jpg" class="w-100" /&gt;
+        &lt;img src="/assets/imgs/demo-5.jpg" class="w-100" /&gt;
     &lt;/picture&gt;
     &lt;figcaption&gt;Caption&lt;/figcaption&gt;
 &lt;/figure&gt;</code></pre>
@@ -414,40 +414,40 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="demo">
                         <div class="row">
                             <div class="col-4 p-2">
-                                <a href="/docs/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
-                                    <img src="/docs/assets/imgs/demo-1.png" class="w-100 rounded-2" />
+                                <a href="/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                                    <img src="/assets/imgs/demo-1.png" class="w-100 rounded-2" />
                                 </a>
                             </div>
 
                             <div class="col-4 p-2">
-                                <a href="/docs/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
-                                    <img src="/docs/assets/imgs/demo-2.png" class="w-100 rounded-2" />
+                                <a href="/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                                    <img src="/assets/imgs/demo-2.png" class="w-100 rounded-2" />
                                 </a>
                             </div>
 
                             <div class="col-4 p-2">
-                                <a href="/docs/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
-                                    <img src="/docs/assets/imgs/demo-3.png" class="w-100 rounded-2" />
+                                <a href="/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                                    <img src="/assets/imgs/demo-3.png" class="w-100 rounded-2" />
                                 </a>
                             </div>
                         </div>
                     </div>
 <pre><code class="language-html">&lt;div class="row"&gt;
     &lt;div class="col-4 p-2"&gt;
-        &lt;a href="/docs/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
-            &lt;img src="/docs/assets/imgs/demo-1.png" class="w-100 rounded-2" /&gt;
+        &lt;a href="/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+            &lt;img src="/assets/imgs/demo-1.png" class="w-100 rounded-2" /&gt;
         &lt;/a&gt;
     &lt;/div&gt;
 
     &lt;div class="col-4 p-2"&gt;
-        &lt;a href="/docs/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
-            &lt;img src="/docs/assets/imgs/demo-2.png" class="w-100 rounded-2" /&gt;
+        &lt;a href="/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+            &lt;img src="/assets/imgs/demo-2.png" class="w-100 rounded-2" /&gt;
         &lt;/a&gt;
     &lt;/div&gt;
 
     &lt;div class="col-4 p-2"&gt;
-        &lt;a href="/docs/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
-            &lt;img src="/docs/assets/imgs/demo-3.png" class="w-100 rounded-2" /&gt;
+        &lt;a href="/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+            &lt;img src="/assets/imgs/demo-3.png" class="w-100 rounded-2" /&gt;
         &lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
@@ -486,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3 id="carousel_options">Carousel Options</h3>
                 <p>
                     You may recognize a few of the available Carousel options 
-                    <a href="https://getbootstrap.com/docs/5.2/components/carousel/#options" target="_blank">from the official Bootstrap documentation</a>.
+                    <a href="https://getbootstrap.com/5.2/components/carousel/#options" target="_blank">from the official Bootstrap documentation</a>.
                 </p>
 
                 <table class="table fs-7">
@@ -580,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3 id="modal_options">Modal Options</h3>
                 <p>
                     You may recognize a few of the available Modal options 
-                    <a href="https://getbootstrap.com/docs/5.2/components/modal/#options" target="_blank">from the official Bootstrap documentation</a>.
+                    <a href="https://getbootstrap.com/5.2/components/modal/#options" target="_blank">from the official Bootstrap documentation</a>.
                 </p>
                 
                 <table class="table fs-7">
