@@ -71,6 +71,53 @@ module.exports = (() => {
                 }),
                 typescript({})
             ]
+        },
+        
+        {
+            input: 'src/ts/index.ts',
+            output: [
+                {
+                    banner: COPYRIGHT,
+                    compact: false,
+                    dir: `dist`,
+                    entryFileNames: `esm/rat.lightbox.js`,
+                    esModule: false,
+                    format: 'es',
+                    globals: ['bootstrap'],
+                    intro: '"use strict";',
+                    name: 'Lightbox',
+                    strict: false,
+                    sourcemap: true
+                },
+                {
+                    banner: COPYSMALL,
+                    compact: true,
+                    dir: `dist`,
+                    entryFileNames: `esm/rat.lightbox.min.js`,
+                    esModule: false,
+                    format: 'es',
+                    globals: ['bootstrap'],
+                    intro: '"use strict";',
+                    name: 'Lightbox',
+                    strict: false,
+                    sourcemap: true,
+                    plugins: [
+                        terser()
+                    ]
+                }
+            ],
+            external: [
+                'bootstrap'
+            ],
+            plugins: [
+                replace({
+                    preventAssignment: true,
+                    values: {
+                        __VERSION__: pkg.version,
+                    }
+                }),
+                typescript({})
+            ]
         }
     ];
 });

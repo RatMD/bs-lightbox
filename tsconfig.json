@@ -15,15 +15,14 @@
         "locale": "en",
         "moduleResolution": "node",
         "newLine": "lf",
-        "paths": {
-            "rat.select": ["src/ts/index"]
-        },
         "removeComments": true,
         "sourceMap": true,
         "target": "ES6"
     },
     "exclude": [
         "./rollup.config.js",
-        "./dist/*"
+        "./dist/*",
+        "./docs/*",
+        "serve.js"
     ]
 }

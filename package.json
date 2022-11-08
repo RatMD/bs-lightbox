@@ -32,10 +32,12 @@
     },
     "scripts": {
         "build": "rollup -c",
-        "watch": "rollup -c --watch"
+        "watch": "rollup -c --watch",
+        "serve": "node serve.js",
+        "start": "concurrently --kill-others \"npm run watch\" \"npm run serve\""
     },
     "main": "dist/js/rat.lightbox.js",
-    "module": "dist/es/rat.lightbox.js",
+    "module": "dist/esm/rat.lightbox.js",
     "browser": "dist/js/rat.lightbox.js",
     "jsdeliver": "dist/js/rat.lightbox.js",
     "typings": "",
@@ -45,8 +47,8 @@
         "@rollup/plugin-replace": "^5.0.1",
         "@rollup/plugin-typescript": "^9.0.2",
         "bootstrap": "^5.2.2",
+        "concurrently": "^7.5.0",
         "rollup": "^3.2.5",
-        "rollup-plugin-consts": "^1.1.0",
         "rollup-plugin-terser": "^7.0.2",
         "tslib": "^2.4.1",
         "typescript": "^4.8.4"
