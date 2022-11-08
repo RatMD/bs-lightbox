@@ -151,9 +151,9 @@ class Lightbox {
         if (this.config.carousel.indicators && this.items.size > 1) {
             indicators = `
                 <div class="carousel-indicators">
-                    ${(new Array(this.items.size)).map((_, idx) => {
+                    ${[...Array(this.items.size)].map((_, idx) => {
                 return `<button type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide-to="${idx}" class="${idx === 0 ? 'active' : ''}" aria-current="${idx === 0 ? 'true' : 'false'}"></button>`;
-            })}
+            }).join('\n')}
                 </div>
             `;
         }
@@ -452,5 +452,5 @@ Lightbox._carousel = null;
 Lightbox._modal = null;
 Lightbox.instances = new Map;
 
-export { Lightbox };
+export { Lightbox as default };
 //# sourceMappingURL=rat.lightbox.js.map

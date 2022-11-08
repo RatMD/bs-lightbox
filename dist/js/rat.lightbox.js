@@ -9,10 +9,10 @@
 |  @copyright  Copyright © 2021 - 2022 rat.md <info@rat.md>
 */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-    typeof define === 'function' && define.amd ? define('rat.Lightbox', ['exports'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.rat = global.rat || {}, global.rat.Lightbox = {})));
-})(this, (function (exports) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define('rat.Lightbox', factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.rat = global.rat || {}, global.rat.Lightbox = factory()));
+})(this, (function () {
     "use strict";
 
     class Lightbox {
@@ -156,9 +156,9 @@
             if (this.config.carousel.indicators && this.items.size > 1) {
                 indicators = `
                 <div class="carousel-indicators">
-                    ${(new Array(this.items.size)).map((_, idx) => {
+                    ${[...Array(this.items.size)].map((_, idx) => {
                 return `<button type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide-to="${idx}" class="${idx === 0 ? 'active' : ''}" aria-current="${idx === 0 ? 'true' : 'false'}"></button>`;
-            })}
+            }).join('\n')}
                 </div>
             `;
             }
@@ -457,7 +457,7 @@
     Lightbox._modal = null;
     Lightbox.instances = new Map;
 
-    exports.Lightbox = Lightbox;
+    return Lightbox;
 
 }));
 //# sourceMappingURL=rat.lightbox.js.map

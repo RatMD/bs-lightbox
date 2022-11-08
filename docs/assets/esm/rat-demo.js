@@ -1,5 +1,5 @@
 
-import { Lightbox } from '../../dist/esm/rat.lightbox.js';
+import Lightbox from '../../dist/esm/rat.lightbox.js';
 
 Lightbox.CAROUSEL = bootstrap.Carousel;
 Lightbox.MODAL = bootstrap.Modal;

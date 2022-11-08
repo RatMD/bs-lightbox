@@ -172,13 +172,11 @@ class Lightbox {
      */
     public static getOrCreateInstance(element: HTMLElement, config: Partial<LightboxConfig> = {}): Lightbox {
         let instance = this.getInstance(element);
-
         if (instance === null) {
             instance = new this(element, config);
         } else {
             instance.append(element);
         }
-
         return instance;
     }
 
@@ -289,9 +287,9 @@ class Lightbox {
         if (this.config.carousel.indicators && this.items.size > 1) {
             indicators = `
                 <div class="carousel-indicators">
-                    ${(new Array(this.items.size)).map((_, idx: number) => {
+                    ${[...Array(this.items.size)].map((_, idx: number) => {
                         return `<button type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide-to="${idx}" class="${idx === 0 ? 'active' : ''}" aria-current="${idx === 0 ? 'true' : 'false'}"></button>`;
-                    })}
+                    }).join('\n')}
                 </div>
             `;
         }
