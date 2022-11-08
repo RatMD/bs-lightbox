@@ -38,19 +38,19 @@
     <div class="intro">
         <div class="container d-flex py-5">
             <div class="col-4 p-2">
-                <a href="/bs-lightbox/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                <a href="/bs-lightbox/assets/imgs/demo-1.png" data-example="lightbox" data-gallery="hero-example" class="d-block">
                     <img src="/bs-lightbox/assets/imgs/demo-1.png" class="w-100 rounded-2" />
                 </a>
             </div>
 
             <div class="col-4 p-2">
-                <a href="/bs-lightbox/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                <a href="/bs-lightbox/assets/imgs/demo-2.png" data-example="lightbox" data-gallery="hero-example" class="d-block">
                     <img src="/bs-lightbox/assets/imgs/demo-2.png" class="w-100 rounded-2" />
                 </a>
             </div>
 
             <div class="col-4 p-2">
-                <a href="/bs-lightbox/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="demo" class="d-block">
+                <a href="/bs-lightbox/assets/imgs/demo-3.png" data-example="lightbox" data-gallery="hero-example" class="d-block">
                     <img src="/bs-lightbox/assets/imgs/demo-3.png" class="w-100 rounded-2" />
                 </a>
             </div>
@@ -58,15 +58,15 @@
     </div>
 
     <div class="container d-flex">
-        <aside class="col-4 bg-light py-5">
-            <ul class="w-100">
+        <aside id="asideNavigation" class="col-4 bg-light pb-5">
+            <ul class="w-100 sticky-top pt-5">
                 <li class="w-100 pe-5">
                     <div class="d-flex align-items-center w-100">
-                        <a href="#getting_started" class="d-flex align-items-center me-auto">
+                        <a href="#getting_started" class="d-flex align-items-center mr-auto">
                             <span>Getting Started</span>
                         </a>
 
-                        <span class="d-flex align-items-center justify-content-center cursor-pointer" data-bs-toggle="collapse" data-bs-target="#sidebarMenuGettingStarted">
+                        <span class="d-flex align-items-center justify-content-center cursor-pointer" data-toggle="collapse" data-target="#sidebarMenuGettingStarted">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                             </svg>
@@ -80,19 +80,39 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#usage_examples">Usage & Examples</a>
+                <li class="w-100 pe-5">
+                    <div class="d-flex align-items-center w-100">
+                        <a href="#usage_examples" class="d-flex align-items-center mr-auto">
+                            <span>Usage & Examples</span>
+                        </a>
 
-                    <ul>
+                        <span class="d-flex align-items-center justify-content-center cursor-pointer" data-toggle="collapse" data-target="#sidebarMenuUsageExamples">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <ul id="sidebarMenuUsageExamples" class="collapse">
                         <li><a href="#supported_variations">Supported Variations</a></li>
                         <li><a href="#lightbox_gallery">Lightbox Gallery</a></li>
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#configuration">Configuration</a>
+                <li class="w-100 pe-5">
+                    <div class="d-flex align-items-center w-100">
+                        <a href="#configuration" class="d-flex align-items-center mr-auto">
+                            <span>Configuration</span>
+                        </a>
 
-                    <ul>
+                        <span class="d-flex align-items-center justify-content-center cursor-pointer" data-toggle="collapse" data-target="#sidebarMenuConfiguration">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <ul id="sidebarMenuConfiguration" class="collapse">
                         <li>
                             <a href="#carousel_options">Carousel Options</a>
                         </li>
@@ -102,10 +122,20 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="methods">Methods</a>
+                <li class="w-100 pe-5">
+                    <div class="d-flex align-items-center w-100">
+                        <a href="#methods" class="d-flex align-items-center mr-auto">
+                            <span>Methods</span>
+                        </a>
 
-                    <ul>
+                        <span class="d-flex align-items-center justify-content-center cursor-pointer" data-toggle="collapse" data-target="#sidebarMenuMethods">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <ul id="sidebarMenuMethods" class="collapse">
                         <li><a href="#method_invoke">Lightbox.invoke</a></li>
                         <li><a href="#method_has_instance">Lightbox.hasInstance</a></li>
                         <li><a href="#method_get_instance">Lightbox.getInstance</a></li>
@@ -130,7 +160,7 @@
             </ul>
         </aside>
 
-        <main class="col-8 p-5" data-spy="scroll" data-target="aside">
+        <main class="col-8 p-5" data-spy="scroll" data-target="#asideNavigation">
             <h1 id="home">@rat.md/bs-lightbox</h1>
             <p class="lead p-5 bg-light my-4">
                 A simple and ease-to-use <strong>Lightbox</strong> system build on top of Bootstrap's native 
@@ -258,11 +288,11 @@ let lightbox = rat.Lightbox.getOrCreateInstance(element);
             <div class="example rounded-2">
                 <div class="demo">
                     <div class="mb-3 d-flex justify-content-center">
-                        <img src="/bs-lightbox/assets/imgs/demo-4.jpg" data-bs-toggle="lightbox" class="w-25 d-block" />
+                        <img src="/bs-lightbox/assets/imgs/demo-4.jpg" data-toggle="lightbox" class="w-25 d-block" />
                     </div>
 
                     <div class="mb-3 d-flex justify-content-center">
-                        <picture data-bs-toggle="lightbox" class="w-25 d-block">
+                        <picture data-toggle="lightbox" class="w-25 d-block">
                             <img src="/bs-lightbox/assets/imgs/demo-5.jpg" class="w-100" />
                         </picture>
                     </div>
@@ -272,11 +302,11 @@ let lightbox = rat.Lightbox.getOrCreateInstance(element);
                     </p>
                 </div>
 <pre><code class="language-html">&lt;div class="mb-3 d-flex justify-content-center"&gt;
-&lt;img src="/bs-lightbox/assets/imgs/demo-4.jpg" data-bs-toggle="lightbox" class="w-25 d-block" /&gt;
+&lt;img src="/bs-lightbox/assets/imgs/demo-4.jpg" data-toggle="lightbox" class="w-25 d-block" /&gt;
 &lt;/div&gt;
 
 &lt;div class="mb-3 d-flex justify-content-center"&gt;
-&lt;picture data-bs-toggle="lightbox" class="w-25 d-block"&gt;
+&lt;picture data-toggle="lightbox" class="w-25 d-block"&gt;
     &lt;img src="/bs-lightbox/assets/imgs/demo-5.jpg" class="w-100" /&gt;
 &lt;/picture&gt;
 &lt;/div&gt;
@@ -302,11 +332,11 @@ let lightbox = rat.Lightbox.getOrCreateInstance(element);
             </p>
             <div class="example rounded-2">
                 <div class="demo">
-                    <a href="/bs-lightbox/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                    <a href="/bs-lightbox/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-toggle="lightbox">
                         <img src="/bs-lightbox/assets/imgs/demo-4.jpg" class="w-25 d-block" />
                     </a>
                     
-                    <a href="/bs-lightbox/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                    <a href="/bs-lightbox/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-toggle="lightbox">
                         <picture class="w-25 d-block">
                             <img src="/bs-lightbox/assets/imgs/demo-5.jpg" class="w-100" />
                         </picture>
@@ -316,11 +346,11 @@ let lightbox = rat.Lightbox.getOrCreateInstance(element);
                         <small>Both links above point to the opposite picture, however just the first one works due to the &lt;img /&gt; element.</small>
                     </p>
                 </div>
-<pre><code class="language-html">&lt;a href="/bs-lightbox/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+<pre><code class="language-html">&lt;a href="/bs-lightbox/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-toggle="lightbox"&gt;
 &lt;img src="/bs-lightbox/assets/imgs/demo-4.jpg" class="w-25 d-block" /&gt;
 &lt;/a&gt;
 
-&lt;a href="/bs-lightbox/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+&lt;a href="/bs-lightbox/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-toggle="lightbox"&gt;
 &lt;picture class="w-25 d-block"&gt;
     &lt;img src="/bs-lightbox/assets/imgs/demo-5.jpg" class="w-100" /&gt;
 &lt;/picture&gt;
@@ -339,11 +369,11 @@ let lightbox = rat.Lightbox.getOrCreateInstance(element);
             </p>
             <div class="example rounded-2">
                 <div class="demo">
-                    <a href="/bs-lightbox/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption">
+                    <a href="/bs-lightbox/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" data-toggle="lightbox" data-title="Title" data-caption="Caption">
                         <img src="/bs-lightbox/assets/imgs/demo-4.jpg" class="w-25 d-block" />
                     </a>
                     
-                    <a href="/bs-lightbox/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox">
+                    <a href="/bs-lightbox/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-toggle="lightbox">
                         <picture class="w-25 d-block" data-title="Title" data-caption="Caption">
                             <img src="/bs-lightbox/assets/imgs/demo-5.jpg" class="w-100" />
                         </picture>
@@ -354,11 +384,11 @@ let lightbox = rat.Lightbox.getOrCreateInstance(element);
                     </p>
                 </div>
 <pre><code class="language-html">&lt;a href="/bs-lightbox/assets/imgs/demo-5.jpg" class="mb-3 d-flex justify-content-center" 
-data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption"&gt;
+data-toggle="lightbox" data-title="Title" data-caption="Caption"&gt;
 &lt;img src="/bs-lightbox/assets/imgs/demo-4.jpg" class="w-25 d-block" /&gt;
 &lt;/a&gt;
 
-&lt;a href="/bs-lightbox/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-bs-toggle="lightbox"&gt;
+&lt;a href="/bs-lightbox/assets/imgs/demo-4.jpg" class="mb-3 d-flex justify-content-center" data-toggle="lightbox"&gt;
 &lt;picture class="w-25 d-block" data-title="Title" data-caption="Caption"&gt;
     &lt;img src="/bs-lightbox/assets/imgs/demo-5.jpg" class="w-100" /&gt;
 &lt;/picture&gt;
@@ -377,24 +407,24 @@ data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption"&gt;
 
             <div class="example rounded-2">
                 <div class="demo">
-                    <figure class="figure d-flex flex-column align-items-center" data-bs-toggle="lightbox" data-bs-title="Title">
+                    <figure class="figure d-flex flex-column align-items-center" data-toggle="lightbox" data-title="Title">
                         <img src="/bs-lightbox/assets/imgs/demo-4.jpg" class="w-25 d-block figure-img" />
                         <figcaption>Caption</figcaption>
                     </figure>
 
-                    <figure class="figure d-flex flex-column align-items-center" data-bs-toggle="lightbox" data-title="Title">
+                    <figure class="figure d-flex flex-column align-items-center" data-toggle="lightbox" data-title="Title">
                         <picture class="w-25 d-block figure-img">
                             <img src="/bs-lightbox/assets/imgs/demo-5.jpg" class="w-100" />
                         </picture>
                         <figcaption>Caption</figcaption>
                     </figure>
                 </div>
-<pre><code class="language-html">&lt;figure class="figure" data-bs-toggle="lightbox" data-bs-title="Title"&gt;
+<pre><code class="language-html">&lt;figure class="figure" data-toggle="lightbox" data-title="Title"&gt;
 &lt;img src="/bs-lightbox/assets/imgs/demo-4.jpg" class="w-25 d-block figure-img" /&gt;
 &lt;figcaption&gt;Caption&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;figure class="figure" data-bs-toggle="lightbox" data-title="Title"&gt;
+&lt;figure class="figure" data-toggle="lightbox" data-title="Title"&gt;
 &lt;picture class="w-25 d-block figure-img"&gt;
     &lt;img src="/bs-lightbox/assets/imgs/demo-5.jpg" class="w-100" /&gt;
 &lt;/picture&gt;
@@ -405,7 +435,7 @@ data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption"&gt;
             <h3 id="lightbox_gallery">Lightbox Gallery</h3>
             <p>
                 A Lightbox / Carousel without the possibility to collect and slide through a bunch of pictures 
-                is absolutely useless. Thus, <strong>bs-lightbox</strong> provides the <code>data-bs-gallery</code> 
+                is absolutely useless. Thus, <strong>bs-lightbox</strong> provides the <code>s-gallery</code> 
                 (or alternatively <code>data-gallery</code>) attribute, which allows to group different pictures 
                 all over the whole document and shows them all together. 
             </p>
@@ -414,19 +444,19 @@ data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption"&gt;
                 <div class="demo">
                     <div class="row">
                         <div class="col-4 p-2">
-                            <a href="/bs-lightbox/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                            <a href="/bs-lightbox/assets/imgs/demo-1.png" data-toggle="lightbox" data-gallery="example" class="d-block">
                                 <img src="/bs-lightbox/assets/imgs/demo-1.png" class="w-100 rounded-2" />
                             </a>
                         </div>
 
                         <div class="col-4 p-2">
-                            <a href="/bs-lightbox/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                            <a href="/bs-lightbox/assets/imgs/demo-2.png" data-toggle="lightbox" data-gallery="example" class="d-block">
                                 <img src="/bs-lightbox/assets/imgs/demo-2.png" class="w-100 rounded-2" />
                             </a>
                         </div>
 
                         <div class="col-4 p-2">
-                            <a href="/bs-lightbox/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block">
+                            <a href="/bs-lightbox/assets/imgs/demo-3.png" data-toggle="lightbox" data-gallery="example" class="d-block">
                                 <img src="/bs-lightbox/assets/imgs/demo-3.png" class="w-100 rounded-2" />
                             </a>
                         </div>
@@ -434,19 +464,19 @@ data-bs-toggle="lightbox" data-bs-title="Title" data-bs-caption="Caption"&gt;
                 </div>
 <pre><code class="language-html">&lt;div class="row"&gt;
 &lt;div class="col-4 p-2"&gt;
-    &lt;a href="/bs-lightbox/assets/imgs/demo-1.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+    &lt;a href="/bs-lightbox/assets/imgs/demo-1.png" data-toggle="lightbox" data-gallery="example" class="d-block"&gt;
         &lt;img src="/bs-lightbox/assets/imgs/demo-1.png" class="w-100 rounded-2" /&gt;
     &lt;/a&gt;
 &lt;/div&gt;
 
 &lt;div class="col-4 p-2"&gt;
-    &lt;a href="/bs-lightbox/assets/imgs/demo-2.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+    &lt;a href="/bs-lightbox/assets/imgs/demo-2.png" data-toggle="lightbox" data-gallery="example" class="d-block"&gt;
         &lt;img src="/bs-lightbox/assets/imgs/demo-2.png" class="w-100 rounded-2" /&gt;
     &lt;/a&gt;
 &lt;/div&gt;
 
 &lt;div class="col-4 p-2"&gt;
-    &lt;a href="/bs-lightbox/assets/imgs/demo-3.png" data-bs-toggle="lightbox" data-bs-gallery="example" class="d-block"&gt;
+    &lt;a href="/bs-lightbox/assets/imgs/demo-3.png" data-toggle="lightbox" data-gallery="example" class="d-block"&gt;
         &lt;img src="/bs-lightbox/assets/imgs/demo-3.png" class="w-100 rounded-2" /&gt;
     &lt;/a&gt;
 &lt;/div&gt;

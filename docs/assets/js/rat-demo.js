@@ -28,4 +28,24 @@ document.addEventListener('DOMContentLoaded', () => {
     example.on('shown.bs.modal', () => {
         console.log('shown.bs.modal');
     });
+
+    let spy = document.querySelector('[data-bs-spy="scroll"],[data-spy="scroll"]');
+    let opened = [];
+    let caller = (ev) => {
+        let list = ev.relatedTarget.closest('ul');
+        if (list.classList.contains('collapse')) {
+            let collapse = bootstrap.Collapse.getOrCreateInstance(list);
+            if (collapse && opened.indexOf(collapse) < 0) {
+                opened.filter(c => { c.hide(); return false; });
+                collapse.show();
+                opened.push(collapse);
+            }
+        }
+    };
+
+    if (bootstrap.Collapse.VERSION[0] === '5') {
+        spy.addEventListener('activate.bs.scrollspy', caller);
+    } else {
+        jQuery(spy).on('activate.bs.scrollspy', caller);
+    }
 });

@@ -34,6 +34,12 @@ aside::before {
     background-color: var(--bs-light, #f8f9fa);
     pointer-events: none;
 }
+aside ul {
+    list-style: none;
+}
+aside a {
+    text-decoration: none;
+}
 .fs-7 {
     font-size: 0.8rem !important;
 }
