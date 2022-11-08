@@ -40,7 +40,12 @@
     "module": "dist/esm/rat.lightbox.js",
     "browser": "dist/js/rat.lightbox.js",
     "jsdeliver": "dist/js/rat.lightbox.js",
-    "typings": "",
+    "typings": "src/types/index.ts",
+    "files": [
+        "dist/*/**",
+        "src/types/*",
+        "CHANGELOG.md"
+    ],
     "reveal": true,
     "dependencies": {},
     "devDependencies": {
