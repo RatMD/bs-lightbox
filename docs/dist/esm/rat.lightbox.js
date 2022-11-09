@@ -1,10 +1,10 @@
 /*!
 |  @rat.md/bs-lightbox - A Bootstrap 5 Lightbox system, based on the native Modal and Carousel abilities.
 |  @file       dist/js/rat.lightbox.js
-|  @version    1.0.2
+|  @version    1.0.3
 |  @author     Sam <sam@rat.md> (https://rat.md)
 |  
-|  @website    https://gitub.com/RatMD/bs-lightbox
+|  @website    https://github.com/RatMD/bs-lightbox
 |  @license    MIT License
 |  @copyright  Copyright © 2021 - 2022 rat.md <info@rat.md>
 */
@@ -32,7 +32,7 @@ class Lightbox {
         return 'lightbox';
     }
     static get VERSION() {
-        return '1.0.2';
+        return '1.0.3';
     }
     static get DEFAULTS() {
         return {
