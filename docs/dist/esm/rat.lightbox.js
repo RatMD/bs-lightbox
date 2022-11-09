@@ -4,7 +4,7 @@
 |  @version    1.0.0
 |  @author     Sam <sam@rat.md> (https://rat.md)
 |  
-|  @website    https://rat.md
+|  @website    https://gitub.com/RatMD/bs-lightbox
 |  @license    MIT License
 |  @copyright  Copyright © 2021 - 2022 rat.md <info@rat.md>
 */
@@ -97,13 +97,13 @@ class Lightbox {
             return this.getOrCreateInstance(el, config);
         });
     }
-    static hasInstance(data) {
-        if (typeof data === 'string') {
-            return this.instances.has(data);
+    static hasInstance(source) {
+        if (typeof source === 'string') {
+            return this.instances.has(source);
         }
         else {
-            let item = data.hasAttribute('data-bs-gallery') ? data.dataset.bsGallery : data;
-            return this.instances.has(item);
+            let key = source.hasAttribute('data-bs-gallery') ? source.dataset.bsGallery : source;
+            return this.instances.has(key);
         }
     }
     static getInstance(source) {

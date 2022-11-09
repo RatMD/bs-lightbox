@@ -32,8 +32,9 @@ class Lightbox {
     static get VERSION(): string {
         return '__VERSION__';
     }
+
     /**
-     * Default Configuration
+     * Get default Configuration
      */
     static get DEFAULTS(): LightboxConfig {
         return {
@@ -59,7 +60,7 @@ class Lightbox {
     }
 
     /**
-     * Get Bootstrap Modal Prototype / Object
+     * Get jQuery Prototype / Object
      */
     static get $() {
         let jquery =  Lightbox._jquery || window['$'] || window['jQuery'];
@@ -113,7 +114,7 @@ class Lightbox {
     }
 
     /**
-     * Default Lightbox Selector
+     * Get default Lightbox Selector
      */
     static get SELECTOR(): string {
         return '[data-toggle="lightbox"],' +
@@ -122,13 +123,15 @@ class Lightbox {
     }
 
     /**
-     * Lightbox instances. 
+     * Available Lightbox instances, grouped by gallery string or element
      */
     public static instances: Map<string|HTMLElement, Lightbox> = new Map;
 
     /**
-     * Invoke Lightbox Elements.
-     * @param selector 
+     * Invoke Lightbox Elements
+     * @param selector A custom selector or null to use the default one.
+     * @param config Additional configuration, which should be applied on new Lightbox instances.
+     * @returns The Lightbox instances, based on the found NodeList.
      */
     public static invoke(selector: null|string = null, config: Partial<LightboxConfig> = {}): Lightbox[] {
         selector = typeof selector !== 'string' ? this.SELECTOR : selector;
@@ -138,23 +141,23 @@ class Lightbox {
     }
 
     /**
-     * Check if instance from HTMLElement or Gallery string exists.
-     * @param data 
-     * @returns 
+     * Check if instance exists, based on an HTMLElement or gallery string
+     * @param source A valid Lightbox HTMLElement candidate, or the gallery string.
+     * @returns True when an instance exists, False otherwise
      */
-    public static hasInstance(data: HTMLElement|string): boolean {
-        if (typeof data === 'string') {
-            return this.instances.has(data);
+    public static hasInstance(source: HTMLElement|string): boolean {
+        if (typeof source === 'string') {
+            return this.instances.has(source);
         } else {
-            let item = data.hasAttribute('data-bs-gallery') ? data.dataset.bsGallery : data;
-            return this.instances.has(item);
+            let key = source.hasAttribute('data-bs-gallery') ? source.dataset.bsGallery : source;
+            return this.instances.has(key);
         }
     }
 
     /**
-     * Get instance from HTMLElement or Gallery string
-     * @param source 
-     * @returns 
+     * Get instance, based on am HTMLElement or gallery string
+     * @param source A valid Lightbox HTMLElement candidate, or the gallery string.
+     * @returns The Lightbox instance on success, null otherwise.
      */
     public static getInstance(source: HTMLElement|string): Lightbox|null {
         if (typeof source === 'string') {
@@ -166,9 +169,10 @@ class Lightbox {
     }
 
     /**
-     * Create a new instance, or get an existing and append passed element
-     * @param element
-     * @returns 
+     * Create a new instance or get an existing one
+     * @param element A valid Lightbox HTMLElement.
+     * @param config Additional configuration, which should be applied on new Lightbox instances.
+     * @returns The new or an existing Lightbox instance.
      */
     public static getOrCreateInstance(element: HTMLElement, config: Partial<LightboxConfig> = {}): Lightbox {
         let instance = this.getInstance(element);
@@ -187,7 +191,7 @@ class Lightbox {
     public config: LightboxConfig;
 
     /**
-     * Legacy indicator if Bootstrap v4 or v5 is used.
+     * Legacy indicator, True -> Bootstrap 4, False -> Bootstrap 5
      */
     public legacy: boolean;
 
