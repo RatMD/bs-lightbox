@@ -1,6 +1,10 @@
 @rat.md/bs-lightbox
 ===================
 
+Version 1.0.3 - Stable
+----------------------
+-   Fix package.json.
+
 Version 1.0.2 - Stable
 ----------------------
 -   Fix package.json.
