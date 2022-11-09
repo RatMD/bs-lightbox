@@ -1,6 +1,6 @@
 {
     "name": "@rat.md/bs-lightbox",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A Bootstrap 5 Lightbox system, based on the native Modal and Carousel abilities.",
     "keywords": [
         "bootstrap",
