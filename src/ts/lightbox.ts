@@ -196,7 +196,7 @@ class Lightbox {
     public legacy: boolean;
 
     /**
-     * Lightbox Items
+     * Lightbox Items Map
      */
     public items: Map<HTMLElement, LightboxItem> = new Map;
 
@@ -226,9 +226,9 @@ class Lightbox {
     private onKeyUpListener: EventListener;
 
     /**
-     * Create a new Lightbox instance.
-     * @param element 
-     * @param config 
+     * Create a new Lightbox instance
+     * @param element A valid Lightbox HTMLElement.
+     * @param config Additional configuration, which should be applied on new Lightbox instances.
      */
     public constructor(element: HTMLElement, config: Partial<LightboxConfig> = {}) {
         let key = element.dataset.bsGallery || element.dataset.gallery || element;
@@ -371,8 +371,8 @@ class Lightbox {
     }
 
     /**
-     * Destroy Lightbox instance with all elements.
-     * @returns
+     * Destroy Lightbox instance with all elements
+     * @returns Current Lightbox instance.
      */
     public dispose(): Lightbox {
         document.removeEventListener('keyup', this.onKeyUpListener);
@@ -418,7 +418,7 @@ class Lightbox {
     }
 
     /**
-     * Get title from element
+     * Get Title from element
      * @param source 
      * @param image 
      * @returns
@@ -432,7 +432,7 @@ class Lightbox {
     }
 
     /**
-     * Get caption from element
+     * Get Caption from element
      * @param source 
      * @param image 
      * @returns
@@ -454,8 +454,8 @@ class Lightbox {
 
     /**
      * Append Lightbox Item
-     * @param source 
-     * @returns
+     * @param source Additional Lightbox element to append to this instance.
+     * @returns Current Lightbox instance.
      */
     public append(source: HTMLElement): Lightbox {
         if (this.items.has(source)) {
@@ -493,7 +493,7 @@ class Lightbox {
 
     /**
      * Toggle Lightbox Modal
-     * @returns
+     * @returns Current Lightbox instance.
      */
     public toggle(): Lightbox {
         if (this.lightbox) {
@@ -506,7 +506,7 @@ class Lightbox {
     /**
      * Show Lightbox Modal
      * @param source 
-     * @returns
+     * @returns Current Lightbox instance.
      */
     public show(source: HTMLElement|null = null): Lightbox {
         if (this.lightbox) {
@@ -572,7 +572,7 @@ class Lightbox {
 
     /**
      * Hide Lightbox Modal
-     * @returns
+     * @returns Current Lightbox instance.
      */
     public hide(): Lightbox {
         if (this.modal) {
@@ -587,7 +587,7 @@ class Lightbox {
 
     /**
      * Cycle Lightbox Carousel
-     * @returns
+     * @returns Current Lightbox instance.
      */
     public cycle(): Lightbox {
         if (this.carousel) {
@@ -602,7 +602,7 @@ class Lightbox {
 
     /**
      * Go to next slide on Lightbox Carousel
-     * @returns
+     * @returns Current Lightbox instance.
      */
     public next(): Lightbox {
         if (this.carousel) {
@@ -617,7 +617,7 @@ class Lightbox {
 
     /**
      * Go to previous slide on Lightbox Carousel
-     * @returns
+     * @returns Current Lightbox instance.
      */
     public prev(): Lightbox {
         if (this.carousel) {
@@ -632,8 +632,9 @@ class Lightbox {
 
     /**
      * Go to a specific slide on Lightbox Carousel
-     * @param direction 
-     * @returns
+     * @param direction A specific slide number (starting from 0) or the string 'next', 'prev' or 
+     *                  'previous'.
+     * @returns Current Lightbox instance.
      */
     public to(direction: number | 'prev' | 'previous' | 'next'): Lightbox {
         if (!this.carousel) {
@@ -656,9 +657,9 @@ class Lightbox {
 
     /**
      * Attach Event Handler for lightbox, modal or carousel.
-     * @param event 
-     * @param caller 
-     * @returns
+     * @param event The desired and supported modal or carousel event name.
+     * @param caller The event listener callback function to add.
+     * @returns Current Lightbox instance.
      */
     public on(event: LightboxEventNames, caller: EventListener): Lightbox {
         if (!this.events.has(event)) {
@@ -670,9 +671,9 @@ class Lightbox {
 
     /**
      * Detach Event Handler from lightbox, modal or carousel.
-     * @param event 
-     * @param caller 
-     * @returns
+     * @param event The desired and supported modal or carousel event name.
+     * @param caller The event listener callback function to remove.
+     * @returns Current Lightbox instance.
      */
     public off(event: LightboxEventNames, caller: EventListener): Lightbox {
         if (this.events.has(event)) {
