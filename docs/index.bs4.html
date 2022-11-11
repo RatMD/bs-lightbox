@@ -114,6 +114,9 @@
 
                     <ul id="sidebarMenuConfiguration" class="collapse">
                         <li>
+                            <a href="#lightbox_options">Lightbox Options</a>
+                        </li>
+                        <li>
                             <a href="#carousel_options">Carousel Options</a>
                         </li>
                         <li>
@@ -492,6 +495,10 @@ data-toggle="lightbox" data-title="Title" data-caption="Caption"&gt;
 <pre><code class="language-javascript">rat.Lightbox.invoke(
 null,       // Use default selector string
 {
+    lightbox: {
+        loader: false,
+        replacePictures: false
+    },
     carousel: {
         id: null,
         controls: true,
@@ -512,6 +519,41 @@ null,       // Use default selector string
     }
 }
 );</code></pre>
+
+            <h3 id="lightbox_options">Lightbox Options</h3>
+            <p>
+                The following options are available since version 1.1.0 and are aimed to configure the 
+                Lightbox environment itself.
+            </p>
+
+            <table class="table fs-7">
+                <thead>
+                    <tr>
+                        <th width="100px">Option</th>
+                        <th width="100px">Type</th>
+                        <th width="175px">Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>loader</th>
+                        <td><code>boolean</code></td>
+                        <td><code>false</code></td>
+                        <td>Shows an spinner and preloads the images inside the Lightbox Carousel in the background.</td>
+                    </tr>
+                    <tr>
+                        <th>replacePictures</th>
+                        <td><code>boolean</code></td>
+                        <td><code>false</code></td>
+                        <td>
+                            The default option will only replace the image source on <code>&lt;img /&gt;</code> elements, 
+                            when the lightbox is introduced on an <code>&lt;a&gt;</code> tag. Enabling this option will a
+                            also replace <code>&lt;picture&gt;</code> elements with an <code>&lt;img /&gt;</code> tag.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
             <h3 id="carousel_options">Carousel Options</h3>
             <p>

@@ -1,5 +1,5 @@
 /*!
-|  @rat.md/bs-lightbox - A Bootstrap 5 Lightbox system, based on the native Modal and Carousel abilities.
+|  @rat.md/bs-lightbox - A simple Bootstrap 4 and Bootstrap 5 Lightbox system using the native Carousel and Modal components.
 |  @file       dist/js/rat.lightbox.js
 |  @version    1.0.3
 |  @author     Sam <sam@rat.md> (https://rat.md)
@@ -28,6 +28,7 @@
             let defaults = Lightbox.DEFAULTS;
             this.config = {
                 carousel: Object.assign({}, defaults.carousel, config.carousel || {}),
+                lightbox: Object.assign({}, defaults.lightbox, config.lightbox || {}),
                 modal: Object.assign({}, defaults.modal, config.modal || {})
             };
             this.append(element);
@@ -51,6 +52,10 @@
                     ride: false,
                     touch: true,
                     wrap: true
+                },
+                lightbox: {
+                    loader: false,
+                    replacePictures: false
                 },
                 modal: {
                     id: null,
@@ -143,8 +148,8 @@
             if (this.config.carousel.controls && this.items.size > 1) {
                 controls = `
                 <button class="carousel-control-prev" type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Previous</span>
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -174,9 +179,21 @@
 
                             <div class="carousel-inner">
                                 ${Array.from(this.items.values()).map((item, idx) => {
+            let source = item.image instanceof HTMLImageElement ? item.image.src : item.image.querySelector('img').src;
             return `
                                         <div class="carousel-item${idx === 0 ? ' active' : ''}">
-                                            ${item.image.outerHTML}
+                                            ${this.config.lightbox.loader ? `
+                                                <div class="${this.legacy ? 'embed-responsive embed-responsive-16by9' : 'ratio ratio-16x9'}" data-img-src="${source}">
+                                                    <div class="d-flex justify-content-center align-items-center embed-responsive-item">
+                                                        <div class="spinner-border" role="status">
+                                                            <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Loading...</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ` : `
+                                                ${item.image.outerHTML}
+                                            `}
+                                            
                                             ${item.caption || item.title ? `
                                                 <div class="carousel-caption d-none d-md-block">
                                                     ${item.title ? `<div class="h5">${item.title}</div>` : ''}
@@ -247,7 +264,6 @@
                 this.lightbox.remove();
             }
             this.lightbox = null;
-            this.events = new Map;
             return this;
         }
         _getImage(source) {
@@ -291,8 +307,14 @@
             }
             let image = original.cloneNode(true);
             image.className = 'w-100';
-            if (image instanceof HTMLImageElement && source instanceof HTMLAnchorElement && source.href.length > 0) {
-                image.src = source.href;
+            if (source instanceof HTMLAnchorElement && source.href.length > 0) {
+                if (image instanceof HTMLImageElement) {
+                    image.src = source.href;
+                }
+                else if (image instanceof HTMLPictureElement && this.config.lightbox.replacePictures) {
+                    image.querySelector('img').src = source.href;
+                    Array.from(image.querySelectorAll('source'), (e) => e.remove());
+                }
             }
             this.items.set(source, {
                 source,
@@ -345,6 +367,18 @@
                     else {
                         this.carousel.to(number);
                     }
+                });
+            }
+            if (this.config.lightbox.loader) {
+                this.lightbox.addEventListener('show.bs.modal', (ev) => {
+                    Array.from(this.lightbox.querySelectorAll('[data-img-src]'), (el) => {
+                        let image = document.createElement('IMG');
+                        image.className = 'w-100';
+                        image.onload = (ev) => {
+                            el.replaceWith(image);
+                        };
+                        image.src = el.dataset.imgSrc;
+                    });
                 });
             }
             let carousel = this.lightbox.querySelector('.carousel');

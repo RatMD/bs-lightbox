@@ -98,5 +98,20 @@ export interface ModalConfig {
 
 export interface LightboxConfig {
     carousel: CarouselConfig;
+    lightbox: {
+
+        /**
+         * Add Pre-Loader for the single Carousel Items
+         * @type {boolean}
+         */
+        loader: boolean;
+
+        /**
+         * Replace Image Source on <picture> tags
+         * @type {boolean}
+         */
+        replacePictures: boolean;
+
+    },
     modal: ModalConfig;
 }

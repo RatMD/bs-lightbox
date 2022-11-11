@@ -49,6 +49,10 @@ class Lightbox {
                 touch: true,
                 wrap: true
             },
+            lightbox: {
+                loader: false,
+                replacePictures: false
+            },
             modal: {
                 id: null,
                 backdrop: true,
@@ -244,6 +248,7 @@ class Lightbox {
         let defaults = Lightbox.DEFAULTS;
         this.config = {
             carousel: Object.assign({}, defaults.carousel, config.carousel || {}),
+            lightbox: Object.assign({}, defaults.lightbox, config.lightbox || {}),
             modal: Object.assign({}, defaults.modal, config.modal || {})
         };
 
@@ -276,8 +281,8 @@ class Lightbox {
         if (this.config.carousel.controls && this.items.size > 1) {
             controls = `
                 <button class="carousel-control-prev" type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Previous</span>
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -311,9 +316,21 @@ class Lightbox {
 
                             <div class="carousel-inner">
                                 ${Array.from(this.items.values()).map((item: LightboxItem, idx: number) => {
+                                    let source = item.image instanceof HTMLImageElement ? item.image.src : item.image.querySelector('img').src;
                                     return `
                                         <div class="carousel-item${idx === 0 ? ' active' : ''}">
-                                            ${item.image.outerHTML}
+                                            ${this.config.lightbox.loader? `
+                                                <div class="${this.legacy ? 'embed-responsive embed-responsive-16by9' : 'ratio ratio-16x9'}" data-img-src="${source}">
+                                                    <div class="d-flex justify-content-center align-items-center embed-responsive-item">
+                                                        <div class="spinner-border" role="status">
+                                                            <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Loading...</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `: `
+                                                ${item.image.outerHTML}
+                                            `}
+                                            
                                             ${item.caption || item.title ? `
                                                 <div class="carousel-caption d-none d-md-block">
                                                     ${item.title ? `<div class="h5">${item.title}</div>` : ''}
@@ -331,6 +348,7 @@ class Lightbox {
                 </div>
             </div>
         `;
+        
 
         this.lightbox = lightbox;
     }
@@ -399,7 +417,6 @@ class Lightbox {
             this.lightbox.remove();
         }
         this.lightbox = null;
-        this.events = new Map;
         return this;
     }
 
@@ -470,8 +487,13 @@ class Lightbox {
         image.className = 'w-100';
 
         // Change URL on <img /> tags
-        if (image instanceof HTMLImageElement && source instanceof HTMLAnchorElement && source.href.length > 0) {
-            image.src = source.href;
+        if (source instanceof HTMLAnchorElement && source.href.length > 0) {
+            if (image instanceof HTMLImageElement) {
+                image.src = source.href;
+            } else if (image instanceof HTMLPictureElement && this.config.lightbox.replacePictures) {
+                image.querySelector('img').src = source.href;
+                Array.from(image.querySelectorAll('source'), (e) => e.remove());
+            }
         }
 
         // Add Item
@@ -541,6 +563,20 @@ class Lightbox {
                 } else {
                     this.carousel.to(number);
                 }
+            });
+        }
+
+        // Attach Loader
+        if (this.config.lightbox.loader) {
+            this.lightbox.addEventListener('show.bs.modal', (ev) => {
+                Array.from(this.lightbox.querySelectorAll('[data-img-src]'), (el: HTMLElement) => {
+                    let image = document.createElement('IMG') as HTMLImageElement;
+                    image.className = 'w-100';
+                    image.onload = (ev) => {
+                        el.replaceWith(image);
+                    };
+                    image.src = el.dataset.imgSrc;
+                });
             });
         }
 
