@@ -2,8 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 const replace = require('@rollup/plugin-replace');
+const terser = require('@rollup/plugin-terser');
 const typescript = require('@rollup/plugin-typescript');
-const { terser } = require('rollup-plugin-terser');
 const pkg = require('./package.json');
 
 

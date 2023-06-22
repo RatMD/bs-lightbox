@@ -83,7 +83,7 @@ Lightbox.invoke(
 ```
 
 
-Copyright &License
+Copyright & License
 -------
 Written and Copyright by [rat.md](https://www.rat.md).
 

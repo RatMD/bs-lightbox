@@ -6,29 +6,11 @@
 |  
 |  @website    https://github.com/RatMD/bs-lightbox
 |  @license    MIT License
-|  @copyright  Copyright © 2021 - 2022 rat.md <info@rat.md>
+|  @copyright  Copyright © 2021 - 2023 rat.md <info@rat.md>
 */
 "use strict";
 
 class Lightbox {
-    constructor(element, config = {}) {
-        this.items = new Map;
-        this.events = new Map;
-        let key = element.dataset.bsGallery || element.dataset.gallery || element;
-        if (Lightbox.instances.has(key)) {
-            throw new Error('An instance with the passed element or gallery has already been created.');
-        }
-        Lightbox.instances.set(key, this);
-        this.legacy = Lightbox.CAROUSEL.VERSION[0] === '4';
-        let defaults = Lightbox.DEFAULTS;
-        this.config = {
-            carousel: Object.assign({}, defaults.carousel, config.carousel || {}),
-            lightbox: Object.assign({}, defaults.lightbox, config.lightbox || {}),
-            modal: Object.assign({}, defaults.modal, config.modal || {})
-        };
-        this.append(element);
-        this.onKeyUpListener = this._onKeyUp.bind(this);
-    }
     static get NAME() {
         return 'lightbox';
     }
@@ -129,6 +111,24 @@ class Lightbox {
             instance.append(element);
         }
         return instance;
+    }
+    constructor(element, config = {}) {
+        this.items = new Map;
+        this.events = new Map;
+        let key = element.dataset.bsGallery || element.dataset.gallery || element;
+        if (Lightbox.instances.has(key)) {
+            throw new Error('An instance with the passed element or gallery has already been created.');
+        }
+        Lightbox.instances.set(key, this);
+        this.legacy = Lightbox.CAROUSEL.VERSION[0] === '4';
+        let defaults = Lightbox.DEFAULTS;
+        this.config = {
+            carousel: Object.assign({}, defaults.carousel, config.carousel || {}),
+            lightbox: Object.assign({}, defaults.lightbox, config.lightbox || {}),
+            modal: Object.assign({}, defaults.modal, config.modal || {})
+        };
+        this.append(element);
+        this.onKeyUpListener = this._onKeyUp.bind(this);
     }
     _onKeyUp(event) {
         if (event.key === 'ArrowRight') {

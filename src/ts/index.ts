@@ -1,4 +1,4 @@
 
-import Lightbox from './Lightbox';
+import Lightbox from './lightbox';
 
 export default Lightbox;
