@@ -1,7 +1,7 @@
 {
     "name": "@rat.md/bs-lightbox",
-    "version": "1.1.1",
-    "description": "A simple Bootstrap 4 and Bootstrap 5 Lightbox system using the native Carousel and Modal components.",
+    "version": "1.2.0",
+    "description": "A lightweight lightbox for Bootstrap 4 and 5, built on native Carousel and Modal components for smooth, dependency-free image galleries.",
     "keywords": [
         "bootstrap",
         "bootstrap-plugin",
@@ -11,50 +11,50 @@
         "bs",
         "rat"
     ],
-    "author": "Sam <sam@rat.md> (https://rat.md)",
+    "homepage": "https://github.com/ratmd/bs-lightbox",
+    "author": "rat.md <info@rat.md> (https://rat.md)",
     "license": "MIT",
     "copyright": "rat.md <info@rat.md>",
-    "homepage": "https://github.com/RatMD/bs-lightbox",
     "bugs": {
-        "url": "https://github.com/RatMD/bs-lightbox",
-        "email": "info@rat.md"
+        "url": "https://www.github.com/ratmd/bs-lightbox",
+        "email": "sam@pytes.net"
     },
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@github.com/RatMD/bs-lightbox.git"
+        "url": "https://github.com/ratmd/bs-lightbox"
     },
-    "funding": [
-        {
-            "type": "buymeacoffee",
-            "url": "https://buymeacoff.ee/ratmd"
+    "type": "module",
+    "main": "./dist/rat.lightbox.mjs",
+    "module": "./dist/rat.lightbox.mjs",
+    "types": "./dist/rat.lightbox.d.ts",
+    "browser": "./dist/rat.lightbox.js",
+    "unpkg": "./dist/rat.lightbox.min.js",
+    "jsdelivr": "./dist/rat.lightbox.min.js",
+    "exports": {
+        ".": {
+            "types": "./dist/rat.lightbox.d.ts",
+            "import": "./dist/rat.lightbox.mjs"
         }
+    },
+    "reveal": true,
+    "files": [
+        "dist"
     ],
     "scripts": {
-        "build": "rollup -c",
-        "watch": "rollup -c --watch",
-        "serve": "node serve.js",
-        "start": "concurrently --kill-others \"npm run watch\" \"npm run serve\""
+        "dev": "vite dev --host --cors",
+        "build": "rimraf dist && vite build",
+        "watch": "vite build --watch",
+        "typecheck": "tsc --noEmit",
+        "prepublishOnly": "npm run build && npm run typecheck"
     },
-    "main": "dist/js/rat.lightbox.js",
-    "module": "dist/esm/rat.lightbox.js",
-    "browser": "dist/js/rat.lightbox.js",
-    "jsdeliver": "dist/js/rat.lightbox.js",
-    "typings": "src/types/index.ts",
-    "files": [
-        "dist/*/**",
-        "src/types/*",
-        "CHANGELOG.md"
-    ],
-    "reveal": true,
-    "dependencies": {},
     "devDependencies": {
-        "@rollup/plugin-replace": "^5.0.2",
-        "@rollup/plugin-terser": "^0.4.3",
-        "@rollup/plugin-typescript": "^11.1.1",
-        "bootstrap": "^5.3.0",
-        "concurrently": "^8.2.0",
-        "rollup": "^3.25.1",
-        "tslib": "^2.5.3",
-        "typescript": "^5.1.3"
+        "@rollup/plugin-terser": "^0.4.4",
+        "@types/node": "^24.10.1",
+        "bootstrap": "^5.3.8",
+        "rimraf": "^6.1.2",
+        "tslib": "^2.8.1",
+        "typescript": "5.8.2",
+        "vite": "^7.2.6",
+        "vite-plugin-dts": "^4.5.4"
     }
 }

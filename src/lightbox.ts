@@ -1,8 +1,7 @@
-
 import type { Carousel, Modal } from 'bootstrap';
-import type { LightboxConfig, LightboxEventNames, LightboxItem } from '../types';
+import type { LightboxConfig, LightboxEventNames, LightboxItem } from './types';
 
-class Lightbox {
+export class Lightbox {
 
     /**
      * Internal jQuery Pointer (for Bootstrap v4)
@@ -30,7 +29,7 @@ class Lightbox {
      * Get Component Version
      */
     static get VERSION(): string {
-        return '__VERSION__';
+        return __VERSION__;
     }
 
     /**
@@ -154,7 +153,7 @@ class Lightbox {
             return this.instances.has(source);
         } else {
             let key = source.hasAttribute('data-bs-gallery') ? source.dataset.bsGallery : source;
-            return this.instances.has(key);
+            return typeof key == 'undefined' ? false : this.instances.has(key);
         }
     }
 
@@ -165,10 +164,10 @@ class Lightbox {
      */
     public static getInstance(source: HTMLElement|string): Lightbox|null {
         if (typeof source === 'string') {
-            return this.instances.has(source) ? this.instances.get(source) : null;
+            return this.instances.get(source) || null;
         } else {
             let key = source.dataset.bsGallery || source.dataset.gallery || source;
-            return this.instances.has(key) ? this.instances.get(key) : null;
+            return typeof key == 'undefined' ? null : this.instances.get(source) || null;
         }
     }
 
@@ -725,6 +724,3 @@ class Lightbox {
         return this;
     }
 }
-
-// Export Module
-export default Lightbox;
