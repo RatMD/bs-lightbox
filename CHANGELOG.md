@@ -1,5 +1,5 @@
-@rat.md/bs-lightbox / Changelog
-===============================
+Bootstrap Lightbox / Changelog
+==============================
 
 ## Version 1.2.0 (Stable)
 - Add: Replace rollup bundle set-up with vite.

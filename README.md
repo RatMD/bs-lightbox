@@ -1,90 +1,79 @@
-@rat.md / bs-lightbox
-=====================
-**bs-lightbox** is a simple Lightbox system based on the Bootstrap-native Carousel and Modal 
-components, compatible with **Bootstrap 5** and **Bootstrap 4**.
+Bootstrap Lightbox
+==================
+**@rat.md/bs-lightbox** is a lightweight lightbox system built on the Bootstrap-native Carousel and 
+Modal components. It works seamlessly with **Bootstrap 5** and **Bootstrap 4** without forcing any 
+bespoke styling on you. Lucky you!
 
-- [View some Examples & the Documentation](https://ratmd.github.io/bs-lightbox/)
+- [View Examples and Documentation](https://ratmd.github.io/bs-lightbox/)
 
-Features
---------
+## Features
+- Fully compatible with **Bootstrap v5** and **Bootstrap v4**
+- Native **lightbox** functionality powered by Bootstrap’s **Carousel** and **Modal**
+- No additional stylesheets or CSS overrides required, purely Bootstrap components and utility classes
+- Full access to all Carousel and Modal **options** and **events**
+- Straightforward but capable API and methods
+- Available as **UMD** and **ES** JavaScript modules WITH typings
+- **Free to use** and written in clean **TypeScript**
 
-- Compatible with **Bootstrap v5** and **Bootstrap v4**
-- Native **Lightbox** environment using Bootstraps **Carousel** & **Modal** components
-- No stylesheet or CSS overwrites, just Bootstraps component & utility classes
-- Access to all Carousel & Modal **options** and **events**
-- Simple but useful API & Methods
-- Available as **ES6** compiled JavaScript and as **ES Module**
-- **Free/To/Use** and written in **Vanilla JS**
+## Installation
+Download the latest release of **@rat.md/bs-lightbox** from the [official GitHub release page](https://github.com/RatMD/bs-lightbox/releases),  
+or install it via npm:
 
-
-Installation
-------------
-
-You can download the latest release of the **bs-lightbox** package directly on the 
-[Release Page of the official GitHub repository](https://github.com/RatMD/bs-lightbox/releases), 
-alternatively you can also receive your copy of this script using npm:
-
-```
+```sh
 npm i @rat.md/bs-lightbox
-```
+``` 
 
-
-Usage
------
-**bs-lightbox** does not provide an own stylesheet, instead it just relies on the Bootstrap-native
-component and utility classes. Since **bs-lightbox** does not provide any bundled JS version, you've 
-to make sure that Bootstrap's JavaScript library is loaded BEFORE the `rat.lightbox` file.
+## Getting Started
+**@rat.md/bs-lightbox** does not ship with its own stylesheet. It relies entirely on Bootstrap’s 
+component and utility classes. Since the package does not include a bundled Bootstrap build, ensure 
+that Bootstrap’s JavaScript is loaded **before** rat.lightbox.
 
 ```html
 <html>
-    <head>
-        <!-- Include Bootstrap CSS -->
-        <link href="path/to/your/css/bootstrap.min.css" />
-    </head>
-    <body>
-        
-        <!-- Simple Lightbox -->
-        <img src="path/to/your/image.jpg" data-bs-handle="lightbox" />
+<head>
+    <!-- Include Bootstrap CSS -->
+    <link href="path/to/your/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
 
-        <!-- Include Bootstrap JS -->
-        <script src="path/to/your/js/bootstrap.bundle.min.js"></script>
+    <!-- Simple Lightbox -->
+    <img src="path/to/your/image.jpg" data-bs-handle="lightbox" />
 
-        <!-- Include @rat.md/bs-lightbox JS -->
-        <script src="path/to/your/js/rat.lightbox.min.js"></script>
+    <!-- Include Bootstrap JS -->
+    <script src="path/to/your/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Invoke Lightbox on all valid components -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                rat.Lightbox.invoke();
-            });
-        </script>
-    </body>
+    <!-- Include @rat.md/bs-lightbox JS -->
+    <script src="path/to/your/js/rat.lightbox.min.js"></script>
+
+    <!-- Invoke the Lightbox on all valid components -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            rat.Lightbox.invoke();
+        });
+    </script>
+</body>
 </html>
 ```
 
-### Usage as ES Module
-**bs-lightbox** does also provide an ES-Module version, which can be found in the `dist/esm` folder. 
-Depending on how you're including Bootstrap, you probably need to append the Carousel and Modal 
-prototype objects / classes manually, as shown below.
+### The ES-Module way
+Depending on how you load Bootstrap, you may need to manually assign the Carousel and Modal 
+prototypes, as shown below.
 
-```javascript
-import { Carousel, Modal } from 'bootstrap';                // Optional, depending on your usage
+```js
+import { Carousel, Modal } from 'bootstrap'; // Optional, depending on your setup
 import { Lightbox } from '../esm/rat.lightbox.min.js';
 
-// The following lines are only necessary, if the 'bootstrap' global is not added
+// Only required if the global 'bootstrap' object is not present
 Lightbox.CAROUSEL = Carousel;
-Lightbox.MODAL = Modal; 
+Lightbox.MODAL = Modal;
 
-// Go on as usual, make sure the following line is execute when the DOM is ready.
+// Invoke as usual. Ensure the call runs after the DOM is ready.
 Lightbox.invoke(
-    null,       // Custom or Default selector
-    {}          // Custom Configurations
+    null, // Custom or default selector
+    {}    // Custom configuration
 );
 ```
 
-
-Copyright & License
--------
-Written and Copyright by [rat.md](https://www.rat.md).
-
-Published under der MIT license.
+## Copyright & Licence
+Published under the MIT License \
+Copyright © 2021 - 2026 rat.md <info@rat.md>
