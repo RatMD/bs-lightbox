@@ -119,6 +119,40 @@ export interface BootstrapLightboxConfig {
     replacePictures: boolean;
 }
 
+export interface LightboxTemplates {
+    /**
+     * 
+     * @param ctx 
+     */
+    renderLightbox(ctx: LightboxInstance): string;
+    
+    /**
+     * 
+     * @param ctx 
+     */
+    renderControls(ctx: LightboxInstance): string|null;
+    
+    /**
+     * 
+     * @param ctx 
+     */
+    renderIndicators(ctx: LightboxInstance): string|null;
+
+    /**
+     * 
+     * @param ctx 
+     * @param item 
+     * @param idx 
+     */
+    renderItem(ctx: LightboxInstance, item: LightboxElement, idx: number): string;
+    
+    /**
+     * 
+     * @param ctx 
+     */
+    renderCloseButton(ctx: LightboxInstance): string|null;
+}
+
 /**
  * Combined configuration object.
  */
@@ -137,6 +171,11 @@ export interface LightboxConfiguration {
      * Bootstrap Modal configuration.
      */
     modal: BootstrapModalConfig;
+
+    /**
+     * Lightbox templates.
+     */
+    templates: LightboxTemplates;
 }
 
 /**
@@ -146,12 +185,17 @@ export interface LightboxElement {
     /**
      * The original HTML element.
      */
-    source: HTMLElement;
+    original: HTMLElement;
 
     /**
      * The associated <img> or <picture> element.
      */
-    image: HTMLImageElement | HTMLPictureElement;
+    root: HTMLImageElement | HTMLPictureElement;
+
+    /**
+     * The related <img> src string.
+     */
+    src: string;
 
     /**
      * Optional lightbox title.

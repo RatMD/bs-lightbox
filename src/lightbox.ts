@@ -1,5 +1,6 @@
 import type { Carousel, Modal } from 'bootstrap';
 import type { LightboxConfiguration, LightboxElement, LightboxEvents, LightboxInstance, LightboxStatic } from './types';
+import { BOOTSTRAP_TEMPLATES } from './templates';
 
 export class Lightbox implements LightboxInstance {
     /**
@@ -58,7 +59,8 @@ export class Lightbox implements LightboxInstance {
                 focus: true,
                 keyboard: true,
                 size: 'xl'
-            }
+            },
+            templates: BOOTSTRAP_TEMPLATES
         }
     }
 
@@ -287,7 +289,8 @@ export class Lightbox implements LightboxInstance {
         this.config = {
             carousel: Object.assign({}, defaults.carousel, config?.carousel || {}),
             lightbox: Object.assign({}, defaults.lightbox, config?.lightbox || {}),
-            modal: Object.assign({}, defaults.modal, config?.modal || {})
+            modal: Object.assign({}, defaults.modal, config?.modal || {}),
+            templates: Object.assign({}, defaults.templates, config?.templates || {}),
         };
 
         // Append Element
@@ -345,102 +348,41 @@ export class Lightbox implements LightboxInstance {
      * Creates the lightbox container.
      */
     private _createLightbox(): HTMLElement {
+        const render = (content: string) => {
+            const tpl = document.createElement('template');
+            tpl.innerHTML = content.trim();
+            return tpl.content;
+        };
+        const showControls = this.config.carousel.controls && this.items.size > 1;
+        const showIndicators = this.config.carousel.indicators && this.items.size > 1;
+        const showCloseButton = this.config.lightbox.closeButton;
 
-        // Carousel Controls
-        let controls = '';
-        if (this.config.carousel.controls && this.items.size > 1) {
-            controls = `
-                <button class="carousel-control-prev" type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Next</span>
-                </button>
-            `;
-        }
-
-        // Carousel Indicators
-        let indicators = '';
-        if (this.config.carousel.indicators && this.items.size > 1) {
-            indicators = `
-                <div class="carousel-indicators">
-                    ${[...Array(this.items.size)].map((_, idx: number) => {
-                        return `<button type="button" data-${this.legacy ? '' : 'bs-'}target="#${this.config.carousel.id || 'lightboxCarousel'}" data-${this.legacy ? '' : 'bs-'}slide-to="${idx}" class="${idx === 0 ? 'active' : ''}" aria-current="${idx === 0 ? 'true' : 'false'}"></button>`;
-                    }).join('\n')}
-                </div>
-            `;
-        }
-
-        // Close Button
-        let buttonConfig = this.config.lightbox.closeButton;
-        let buttonClose = '';
-        if (buttonConfig !== false) {
-            if (this.legacy) {
-                buttonClose = `
-                    <div class="w-100 position-absolute d-flex justify-content-end p-3" style="z-index:1500;pointer-events:none;">
-                        <button type="button" class="close ${buttonConfig == 'light' ? 'text-white' : ''}" data-dismiss="modal" aria-label="Close" style="pointer-events:auto;">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                `;
-            } else {
-                buttonClose = `
-                    <div class="position-absolute top-0 end-0 p-3 z-3 pe-none" ${buttonConfig == 'light' ? 'data-bs-theme="dark"' : ''}>
-                        <button type="button" class="btn-close ${buttonConfig == 'light' ? 'btn-close-white' : ''} pe-auto" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                `;
-            }
-        }
-
-        // Lightbox
-        let lightbox = document.createElement('DIV');
-        lightbox.className = 'modal modal-lightbox fade';
-        lightbox.tabIndex = -1;
-        lightbox.innerHTML = `
-            <div id="${this.config.modal.id || 'lightboxModal'}" class="modal-dialog${this.config.modal.size !== null ? (' modal-' + this.config.modal.size) : ' '} modal-dialog-centered">
-                <div class="modal-content overflow-hidden">
-                    <div class="modal-body p-0">
-                        ${buttonClose}
-                        <div id="${this.config.carousel.id || 'lightboxCarousel'}" class="carousel carousel-fade slide">
-                            ${indicators}
-
-                            <div class="carousel-inner">
-                                ${Array.from(this.items.values()).map((item: LightboxElement, idx: number) => {
-                                    let source = item.image instanceof HTMLImageElement ? item.image.src : item.image.querySelector('img')?.src;
-                                    return `
-                                        <div class="carousel-item${idx === 0 ? ' active' : ''}">
-                                            ${this.config.lightbox.loader? `
-                                                <div class="${this.legacy ? 'embed-responsive embed-responsive-16by9' : 'ratio ratio-16x9'}" data-img-src="${source}">
-                                                    <div class="d-flex justify-content-center align-items-center embed-responsive-item">
-                                                        <div class="spinner-border" role="status">
-                                                            <span class="${this.legacy ? 'sr-only' : 'visually-hidden'}">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            `: `
-                                                ${item.image.outerHTML}
-                                            `}
-                                            
-                                            ${item.caption || item.title ? `
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    ${item.title ? `<div class="h5">${item.title}</div>` : ''}
-                                                    ${item.caption ? `<p>${item.caption}</p>` : ''}
-                                                </div>
-                                            ` : ''}
-                                        </div>
-                                    `;
-                                }).join('\n')}
-                            </div>
-
-                            ${controls}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+        // Partials
+        const controls = showControls ? this.config.templates.renderControls(this) : null;
+        const indicators = showIndicators ? this.config.templates.renderIndicators(this) : null;
+        const close = showCloseButton ? this.config.templates.renderCloseButton(this) : null;
+        const slides = Array.from(this.items.values()).map(
+            (item: LightboxElement, idx: number) => this.config.templates.renderItem(this, item, idx)
+        ).join('\n');
         
+        // Lightbox
+        const content = this.config.templates.renderLightbox(this);
+        const lightbox = render(content || '').firstElementChild as HTMLElement|null;
+        if (!lightbox) {
+            throw new Error('Lightbox template must contain a single root element.');
+        }
+        if (close) {
+            lightbox.querySelector('[data-lightbox-slot="close-button"]')?.replaceWith(render(close));
+        }
+        if (indicators) {
+            lightbox.querySelector('[data-lightbox-slot="indicators"]')?.replaceWith(render(indicators));
+        }
+        if (slides) {
+            lightbox.querySelector('[data-lightbox-slot="slides"]')?.replaceWith(render(slides));
+        }
+        if (controls) {
+            lightbox.querySelector('[data-lightbox-slot="controls"]')?.replaceWith(render(controls));
+        }
         return lightbox;
     }
 
@@ -531,47 +473,49 @@ export class Lightbox implements LightboxInstance {
 
     /**
      * Appends an additional element to the lightbox.
-     * @param source The element to add.
+     * @param original The element to add.
      * @returns The current instance.
      */
-    public append(source: HTMLElement): this {
-        if (this.items.has(source)) {
+    public append(original: HTMLElement): this {
+        if (this.items.has(original)) {
             return this;
         }
 
-        let original = this._getImage(source);
-        if (original === null) {
-            throw new Error(`The passed element is not nor contains a supported image source. Element HTML: ${source.outerHTML}.`);
+        let clone = this._getImage(original);
+        if (clone === null) {
+            throw new Error(`The passed element is not nor contains a supported image original. Element HTML: ${original.outerHTML}.`);
         }
-        let image = original.cloneNode(true) as HTMLImageElement | HTMLPictureElement;
-        image.className = 'w-100';
+        let root = clone.cloneNode(true) as HTMLImageElement | HTMLPictureElement;
+        root.className = 'w-100';
 
         // Change URL on <img /> tags
-        if (source instanceof HTMLAnchorElement && source.href.length > 0) {
-            if (image instanceof HTMLImageElement) {
-                image.src = source.href;
-            } else if (image instanceof HTMLPictureElement && this.config.lightbox.replacePictures) {
-                const temp = image.querySelector('img');
+        let src;
+        if (original instanceof HTMLAnchorElement && original.href.length > 0) {
+            if (root instanceof HTMLImageElement) {
+                src = root.src = original.href;
+            } else if (root instanceof HTMLPictureElement && this.config.lightbox.replacePictures) {
+                const temp = root.querySelector('img');
                 if (temp) {
-                    temp.src = source.href;
+                    src = temp.src = original.href;
                 }
-                Array.from(image.querySelectorAll('source'), (e) => e.remove());
+                Array.from(root.querySelectorAll('source'), (e) => e.remove());
             }
         }
 
         // Add Item
-        this.items.set(source, {
-            source,
-            image,
-            title: this._getTitle(source, image),
-            caption: this._getCaption(source, image)
+        this.items.set(original, {
+            original,
+            root,
+            src,
+            title: this._getTitle(original, root),
+            caption: this._getCaption(original, root)
         });
         
         // Link Item
-        source.setAttribute(this.legacy ? 'data-slide-to' : 'data-bs-slide-to', (this.items.size-1).toString());
-        source.addEventListener('click', (ev) => {
+        original.setAttribute(this.legacy ? 'data-slide-to' : 'data-bs-slide-to', (this.items.size-1).toString());
+        original.addEventListener('click', (ev) => {
             ev.preventDefault();
-            this.show(source);
+            this.show(original);
         });
         return this;
     }
