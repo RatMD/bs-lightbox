@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@rat.md / bs-lightbox</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="/assets/css/github.min.css" rel="stylesheet" />
+    <link href="/assets/css/github-dark.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="/assets/js/highlight.min.js"></script>
+</head>
+<body>
+    <header data-bs-theme="dark" class="text-white" style="--bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);background-color: #212529;background-image: radial-gradient(circle, rgba(var(--bs-tertiary-bg-rgb), 0.35) 1px, rgba(0, 0, 0, 0) 1px);background-size: 1rem 1rem;">
+        <div class="container py-4">
+            <nav class="navbar navbar-expand-lg rounded-lg py-1 px-3 shadow-sm" style="background-color:#161719;">
+                <a href="https://ratmd.github.io/bs-lightbox" class="navbar-brand d-flex align-items-center">
+                    <img src="/assets/rat-logo.svg" width="36px" height="36px" />
+                    <span class="ml-2">/ bs-lightbox</span>
+                    <span class="badge text-bg-danger rounded-pill ml-2" style="font-size:12px;">2.0.0</span>
+                </a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="/index.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/index.bs5.html" class="nav-link">Bootstrap 5</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/index.bs4.html" class="nav-link active" aria-current="page">Bootstrap 4</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/docs.html" class="nav-link">Documentation</a>
+                        </li>
+                        <li class="nav-item border-end my-2 mx-2"></li>
+                        <li class="nav-item">
+                            <a href="https://github.com/RatMD/bs-lightbox" class="nav-link mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="mt-4 py-2 d-flex flex-row justify-content-between align-items-center">
+                <div class="d-flex flex-column align-items-start py-5">
+                    <div class="px-3">
+                        <h1 class="lead display-4">Bootstrap Lightbox</h1>
+                    </div>
+                    <div class="px-2 mt-2 d-flex flex-row align-items-center">
+                        <div class="shadow-sm d-flex flex-row rounded">
+                            <pre class="border-end border-dark m-0"><code class="language-bash rounded-left py-2 bg-secondary-subtle" style="height:38px">npm i @rat.md/bs-lightbox</code></pre>
+                            <button type="button" data-action="copy" data-content="npm i @rat.md/bs-lightbox" class="btn btn-sm rounded-start-0 rounded-end bg-secondary-subtle py-0 px-23" style="height:38px;line-height:0;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16" style="margin-top:-2px;">
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F7DF25" class="bi bi-clipboard-check text-white d-none" viewBox="0 0 16 16" style="margin-top:-2px;">
+                                    <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <a href="https://github.com/RatMD/bs-lightbox" class="nav-link ml-2" style="margin-top:-2px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="d-flex px-3 w-50">
+                    <div class="row w-100">
+                        <div class="col-6 p-2">
+                            <div class="embed-responsive embed-responsive-16by9 shadow-sm">
+                                <img data-bs-lightbox="main" src="/assets/imgs/demo-01.webp" width="auto" height="auto" class="embed-responsive-item rounded-lg overflow-hidden" />
+                            </div>
+                        </div>
+                        <div class="col-3 p-2 d-flex flex-column gap-2">
+                            <div class="embed-responsive embed-responsive-16by9 shadow-sm">
+                                <img data-bs-lightbox="main" src="/assets/imgs/demo-02.webp" width="auto" height="auto" class="embed-responsive-item rounded-lg overflow-hidden" />
+                            </div>
+                            <div class="embed-responsive embed-responsive-16by9 mt-2 shadow-sm">
+                                <img data-bs-lightbox="main" src="/assets/imgs/demo-03.webp" width="auto" height="auto" class="embed-responsive-item rounded-lg overflow-hidden" />
+                            </div>
+                        </div>
+                        <div class="col-3 p-2 d-flex flex-column gap-2">
+                            <div class="embed-responsive embed-responsive-16by9 shadow-sm">
+                                <img data-bs-lightbox="main" src="/assets/imgs/demo-04.webp" width="auto" height="auto" class="embed-responsive-item rounded-lg overflow-hidden" />
+                            </div>
+                            <div class="embed-responsive embed-responsive-16by9 mt-2 shadow-sm">
+                                <img data-bs-lightbox="main" src="/assets/imgs/demo-05.webp" width="auto" height="auto" class="embed-responsive-item rounded-lg overflow-hidden" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-4">
+        <div class="container">
+            <div class="row justify-content-between">
+                <article class="col-8">
+                    <div class="d-flex flex-row align-items-start">
+                        <div class="alert alert-light shadow-sm rounded-lg py-2 px-3" role="alert" style="font-size:12px;">
+                            The demo images are taken from the press kit for <strong>Laika: Aged Through Blood</strong> 
+                            by Brainwash Gang and Thunderful Publishing.<br />
+                            Further information is available at <a href="https://thunderfulgames.com/games/laika-aged-through-blood/" class="alert-link" target="_blank">https://thunderfulgames.com</a> 
+                            or at <a href="https://store.steampowered.com/app/1796220/Laika_Aged_Through_Blood/" class="alert-link" target="_blank">https://store.steampowered.com</a>.
+                        </div>
+                    </div>
+
+                    <div class="py-2 px-3">
+                        <h2 class="lead fs-2">What's a Lightbox?</h2>
+                        <p class="lead fs-6">
+                            A lightbox is a pleasantly straightforward way to showcase images by enlarging 
+                            them in a tidy overlay while politely dimming the rest of the page. With the 
+                            package <code>@rat.md/bs-lightbox</code>, things get even simpler. It plugs 
+                            directly into Bootstrap's existing CSS and JavaScript environment, meaning 
+                            there's no need for custom styling, heavy scripts or any other dramatic extras. 
+                            Instead, it cleverly leans on Bootstrap's own Modal and Carousel components 
+                            (across both Bootstrap 4 and 5), turning them into a smooth, gallery-like experience. 
+                            The result is a lightbox that feels almost suspiciously effortless, as if Bootstrap 
+                            had been planning this all along, just forgot to include it in the core library.
+                        </p>
+
+                        <h2 class="lead fs-2 mt-5">Powerful Features</h2>
+                        <ul class="lead">
+                            <li>Fully compatible with <strong>Bootstrap v5</strong> and <strong>Bootstrap v4</strong></li>
+                            <li><strong>Native lightbox</strong> functionality powered by Bootstrap's Carousel and Modal</li>
+                            <li><strong>No additional CSS</strong> required, purely Bootstrap components and utility classes</li>
+                            <li>Full access to all <strong>Carousel</strong> and <strong>Modal</strong> options and events</li>
+                            <li>Straightforward but capable <strong>API</strong> and methods</li>
+                            <li>Available as <strong>UMD</strong> and <strong>ES</strong> JavaScript modules WITH typings</li>
+                            <li><strong>Free to use</strong> and written in clean <strong>TypeScript</strong></li>
+                        </ul>
+                    </div>
+                </article>
+                <aside class="col-3 border-start">
+                    <nav class="h-100 flex-column align-items-stretch pe-4">
+                        <div class="list-group">
+                            <div class="list-group-item rounded-lg mb-1">
+                                <div class="d-flex align-items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16" style="margin-bottom: -1px;">
+                                        <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5"/>
+                                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                                    </svg>
+                                    <strong class="fw-semibold">Documentation</strong>
+                                </div>
+                            </div>
+                            <a href="#" class="list-group-item border-0 rounded-lg list-group-item-action">
+                                Getting Started
+                            </a>
+                            <a href="#" class="list-group-item border-0 rounded-lg list-group-item-action">
+                                Usage
+                            </a>
+                            <a href="#" class="list-group-item border-0 rounded-lg list-group-item-action">
+                                Configuration
+                            </a>
+                            <a href="#" class="list-group-item border-0 rounded-lg list-group-item-action">
+                                API
+                            </a>
+                            <a href="#" class="list-group-item border-0 rounded-lg list-group-item-action">
+                                Events
+                            </a>
+                        </div>
+                        <div class="list-group mt-4">
+                            <a href="https://github.com/RatMD/bs-lightbox/issues" target="_blank" class="list-group-item rounded-lg border-danger bg-danger-subtle text-danger">
+                                <div class="d-flex align-items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bug" viewBox="0 0 16 16">
+                                        <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A5 5 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A5 5 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623M4 7v4a4 4 0 0 0 3.5 3.97V7zm4.5 0v7.97A4 4 0 0 0 12 11V7zM12 6a4 4 0 0 0-1.334-2.982A3.98 3.98 0 0 0 8 2a3.98 3.98 0 0 0-2.667 1.018A4 4 0 0 0 4 6z"/>
+                                    </svg>
+                                    <strong class="fw-semibold" style="font-size:14px;">Bug or Feature Request?</strong>
+                                </div>
+                            </a>
+                        </div>
+                    </nav>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <hr class="mt-5 mb-3" />
+
+            <div class="px-3 d-flex flex-row justify-content-between" style="font-size:12px;">
+                <div class="text-secondary">
+                    Copyright &copy; 2021 - 2026 rat.md <a href="mailto:info@rat.md" class="link-secondary">&lt;info@rat.md&gt;</a><br />
+                    @rat.md/bs-lightbox is published under the MIT license
+                </div>
+                <div class="text-secondary text-end">
+                    Source available at <a href="https://github.com/RatMD/bs-lightbox" class="link-secondary" target="_blank">GitHub.com</a><br />
+                    Distributed via <a href="http://npmjs.com/@rat.md/bs-lightbox" class="link-secondary" target="_blank">npmjs.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="/demo.ts"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

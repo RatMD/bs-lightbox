@@ -104,6 +104,11 @@ export interface BootstrapModalConfig {
  */
 export interface BootstrapLightboxConfig {
     /**
+     * Enables the close button, allows to choose between light and dark variant.
+     */
+    closeButton: boolean | 'light' | 'dark';
+
+    /**
      * Enables a pre-loader for individual carousel items.
      */
     loader: boolean;

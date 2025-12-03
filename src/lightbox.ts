@@ -48,6 +48,7 @@ export class Lightbox implements LightboxInstance {
                 wrap: true
             },
             lightbox: {
+                closeButton: true,
                 loader: false,
                 replacePictures: false
             },
@@ -372,6 +373,27 @@ export class Lightbox implements LightboxInstance {
             `;
         }
 
+        // Close Button
+        let buttonConfig = this.config.lightbox.closeButton;
+        let buttonClose = '';
+        if (buttonConfig !== false) {
+            if (this.legacy) {
+                buttonClose = `
+                    <div class="w-100 position-absolute d-flex justify-content-end p-3" style="z-index:1500;pointer-events:none;">
+                        <button type="button" class="close ${buttonConfig == 'light' ? 'text-white' : ''}" data-dismiss="modal" aria-label="Close" style="pointer-events:auto;">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                `;
+            } else {
+                buttonClose = `
+                    <div class="position-absolute top-0 end-0 p-3 z-3 pe-none" ${buttonConfig == 'light' ? 'data-bs-theme="dark"' : ''}>
+                        <button type="button" class="btn-close ${buttonConfig == 'light' ? 'btn-close-white' : ''} pe-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                `;
+            }
+        }
+
         // Lightbox
         let lightbox = document.createElement('DIV');
         lightbox.className = 'modal modal-lightbox fade';
@@ -380,6 +402,7 @@ export class Lightbox implements LightboxInstance {
             <div id="${this.config.modal.id || 'lightboxModal'}" class="modal-dialog${this.config.modal.size !== null ? (' modal-' + this.config.modal.size) : ' '} modal-dialog-centered">
                 <div class="modal-content overflow-hidden">
                     <div class="modal-body p-0">
+                        ${buttonClose}
                         <div id="${this.config.carousel.id || 'lightboxCarousel'}" class="carousel carousel-fade slide">
                             ${indicators}
 
