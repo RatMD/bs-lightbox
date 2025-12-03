@@ -1,6 +1,6 @@
 {
     "name": "@rat.md/bs-lightbox",
-    "version": "1.2.0",
+    "version": "2.0.0",
     "description": "A lightweight lightbox for Bootstrap 4 and 5, built on native Carousel and Modal components for smooth, dependency-free image galleries.",
     "keywords": [
         "bootstrap",
@@ -42,11 +42,12 @@
     ],
     "scripts": {
         "dev": "vite dev --host --cors",
-        "build": "rimraf dist && vite build",
+        "build": "vite build",
         "watch": "vite build --watch",
         "typecheck": "tsc --noEmit",
         "prepublishOnly": "npm run build && npm run typecheck"
     },
+    "dependencies": {},
     "devDependencies": {
         "@rollup/plugin-terser": "^0.4.4",
         "@types/node": "^24.10.1",

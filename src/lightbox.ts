@@ -1,41 +1,40 @@
 import type { Carousel, Modal } from 'bootstrap';
-import type { LightboxConfig, LightboxEventNames, LightboxItem } from './types';
+import type { LightboxConfiguration, LightboxElement, LightboxEvents, LightboxInstance, LightboxStatic } from './types';
 
-export class Lightbox {
-
+export class Lightbox implements LightboxInstance {
     /**
-     * Internal jQuery Pointer (for Bootstrap v4)
+     * Internal jQuery prototype or object reference (used for Bootstrap v4 only).
      */
     private static _jquery = null;
 
     /**
-     * Internal Bootstrap Carousel Pointer
+     * Internal Bootstrap Carousel prototype or object reference.
      */
     private static _carousel = null;
 
     /**
-     * Internal Bootstrap Modal Pointer
+     * Internal Bootstrap Modal prototype or object reference.
      */
     private static _modal = null;
 
     /**
-     * Get Component Name
+     * Component name.
      */
     static get NAME(): string {
         return 'lightbox';
     }
 
     /**
-     * Get Component Version
+     * Component version.
      */
     static get VERSION(): string {
         return __VERSION__;
     }
 
     /**
-     * Get default Configuration
+     * Default Lightbox configuration.
      */
-    static get DEFAULTS(): LightboxConfig {
+    static get DEFAULTS(): LightboxConfiguration {
         return {
             carousel: {
                 id: null,
@@ -63,7 +62,14 @@ export class Lightbox {
     }
 
     /**
-     * Get jQuery Prototype / Object
+     * Set jQuery prototype or object reference.
+     */
+    static set $(jQuery) {
+        Lightbox._jquery = jQuery;
+    }
+
+    /**
+     * Get jQuery prototype or object reference.
      */
     static get $() {
         let jquery =  Lightbox._jquery || window['$'] || window['jQuery'];
@@ -74,17 +80,17 @@ export class Lightbox {
     }
 
     /**
-     * Set jQuery Prototype / Object
+     * Set Bootstrap Carousel prototype or object reference.
      */
-    static set $(jQuery) {
-        Lightbox._jquery = jQuery;
+    static set CAROUSEL(object) {
+        Lightbox._carousel = object;
     }
 
     /**
-     * Get Bootstrap Carousel Prototype / Object
+     * Get Bootstrap Carousel prototype or object reference.
      */
     static get CAROUSEL() {
-        let carousel =  Lightbox._carousel || (window['bootstrap'] || window['Bootstrap'] || {}).Carousel;
+        let carousel = Lightbox._carousel || (window['bootstrap'] || window['Bootstrap'] || {}).Carousel;
         if (!carousel) {
             throw new Error('No Bootstrap Carousel prototype found, please use Lightbox.CAROUSEL = <Bootstrap.Carousel>.');
         }
@@ -92,14 +98,14 @@ export class Lightbox {
     }
 
     /**
-     * Set Bootstrap Carousel Prototype / Object
+     * Set Bootstrap Modal prototype or object reference.
      */
-    static set CAROUSEL(object) {
-        Lightbox._carousel = object;
+    static set MODAL(object) {
+        Lightbox._modal = object;
     }
 
     /**
-     * Get Bootstrap Modal Prototype / Object
+     * Get Bootstrap Modal prototype or object reference.
      */
     static get MODAL() {
         let modal =  Lightbox._modal || (window['bootstrap'] || window['Bootstrap'] || {}).Modal;
@@ -110,33 +116,46 @@ export class Lightbox {
     }
 
     /**
-     * Set Bootstrap Modal Prototype / Object
-     */
-    static set MODAL(object) {
-        Lightbox._modal = object;
-    }
-
-    /**
-     * Get default Lightbox Selector
+     * Get default lightbox selector.
      */
     static get SELECTOR(): string {
-        return '[data-toggle="lightbox"],' +
-               '[data-bs-toggle="lightbox"],' +
-               '[data-rat-lightbox]';
+        return '[data-bs-lightbox],[data-bs-toggle="lightbox"],[data-toggle="lightbox"]';
     }
 
     /**
-     * Available Lightbox instances, grouped by gallery string or element
+     * Registered lightbox instances, grouped by originating element.
      */
-    public static instances: Map<string|HTMLElement, Lightbox> = new Map;
+    public static singleInstances: Map<HTMLElement, LightboxInstance> = new Map;
 
     /**
-     * Invoke Lightbox Elements
-     * @param selector A custom selector or null to use the default one.
-     * @param config Additional configuration, which should be applied on new Lightbox instances.
-     * @returns The Lightbox instances, based on the found NodeList.
+     * Registered lightbox instances, grouped by gallery-identifier.
      */
-    public static invoke(selector: null|string = null, config: Partial<LightboxConfig> = {}): Lightbox[] {
+    public static galleryInstances: Map<string, LightboxInstance> = new Map;
+
+    /**
+     * Detects the gallery identifier from the given element.
+     * @param source The HTML element to inspect.
+     * @returns 
+     */
+    public static getGalleryIdentifier(source: HTMLElement): string|null {
+        for (const key of ['data-bs-lightbox', 'data-bs-gallery', 'data-gallery']) {
+            if (source.hasAttribute(key)) {
+                let group = (source.getAttribute(key) || '').trim();
+                if (group.length > 0) {
+                    return group;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Initializes lightbox elements.
+     * @param selector A custom selector, or null to use the default.
+     * @param config Additional configuration for new instances.
+     * @returns An array of created or existing instances.
+     */
+    public static invoke(selector?: null | string, config?: Partial<LightboxConfiguration>): LightboxInstance[] {
         selector = typeof selector !== 'string' ? this.SELECTOR : selector;
         return Array.from(document.querySelectorAll(selector), (el: HTMLElement) => {
             return this.getOrCreateInstance(el, config);
@@ -144,41 +163,48 @@ export class Lightbox {
     }
 
     /**
-     * Check if instance exists, based on an HTMLElement or gallery string
-     * @param source A valid Lightbox HTMLElement candidate, or the gallery string.
-     * @returns True when an instance exists, False otherwise
+     * Checks whether an instance exists for a given element or group key.
+     * @param sourceOrGalleryId A valid lightbox element or group identifier.
+     * @returns True if an instance exists.
      */
-    public static hasInstance(source: HTMLElement|string): boolean {
-        if (typeof source === 'string') {
-            return this.instances.has(source);
+    public static hasInstance(sourceOrGalleryId: HTMLElement | string): boolean {
+        if (sourceOrGalleryId instanceof HTMLElement) {
+            return this.singleInstances.has(sourceOrGalleryId);
         } else {
-            let key = source.hasAttribute('data-bs-gallery') ? source.dataset.bsGallery : source;
-            return typeof key == 'undefined' ? false : this.instances.has(key);
+            return this.galleryInstances.has(sourceOrGalleryId);
         }
     }
 
     /**
-     * Get instance, based on am HTMLElement or gallery string
-     * @param source A valid Lightbox HTMLElement candidate, or the gallery string.
-     * @returns The Lightbox instance on success, null otherwise.
+     * Retrieves an existing instance for an element or gallery key.
+     * @param sourceOrGalleryId A valid lightbox element or gallery identifier.
+     * @returns The instance if found, otherwise null.
      */
-    public static getInstance(source: HTMLElement|string): Lightbox|null {
-        if (typeof source === 'string') {
-            return this.instances.get(source) || null;
+    public static getInstance(sourceOrGalleryId: HTMLElement | string): LightboxInstance | null {
+        if (sourceOrGalleryId instanceof HTMLElement) {
+            return this.singleInstances.get(sourceOrGalleryId) || null;
         } else {
-            let key = source.dataset.bsGallery || source.dataset.gallery || source;
-            return typeof key == 'undefined' ? null : this.instances.get(source) || null;
+            return this.galleryInstances.get(sourceOrGalleryId) || null;
         }
     }
 
     /**
-     * Create a new instance or get an existing one
-     * @param element A valid Lightbox HTMLElement.
-     * @param config Additional configuration, which should be applied on new Lightbox instances.
-     * @returns The new or an existing Lightbox instance.
+     * Returns an existing instance or creates a new one.
+     * @param element A valid lightbox element.
+     * @param config Additional configuration for new instances.
+     * @returns The created or existing instance.
      */
-    public static getOrCreateInstance(element: HTMLElement, config: Partial<LightboxConfig> = {}): Lightbox {
+    public static getOrCreateInstance(element: HTMLElement, config?: Partial<LightboxConfiguration>): LightboxInstance {
         let instance = this.getInstance(element);
+        if (instance) {
+            return instance;
+        }
+
+        let galleryId = this.getGalleryIdentifier(element);
+        if (galleryId) {
+            instance = this.getInstance(galleryId);
+        }
+
         if (instance === null) {
             instance = new this(element, config);
         } else {
@@ -187,58 +213,70 @@ export class Lightbox {
         return instance;
     }
 
-
     /**
-     * Lightbox instance configuration
+     * Instance configuration.
      */
-    public config: LightboxConfig;
+    public config: LightboxConfiguration;
 
     /**
-     * Legacy indicator, True -> Bootstrap 4, False -> Bootstrap 5
+     * True for Bootstrap 4 mode, false for Bootstrap 5.
      */
     public legacy: boolean;
 
     /**
-     * Lightbox Items Map
+     * Collection of lightbox items.
      */
-    public items: Map<HTMLElement, LightboxItem> = new Map;
+    public items: Map<HTMLElement, LightboxElement> = new Map;
 
     /**
-     * Configured Events
+     * Registered event listeners.
      */
-    public events: Map<LightboxEventNames, Set<EventListener>> = new Map;
+    public events: Map<LightboxEvents, Set<EventListener>> = new Map;
 
     /**
-     * Root Lightbox Container
+     * Root lightbox container element.
      */
     public lightbox: HTMLElement|null;
 
     /**
-     * Bootstrap Carousel instance
+     * Bootstrap Carousel instance.
      */
     public carousel: Carousel|null;
 
     /**
-     * Bootstrap Modal instance
+     * Bootstrap Modal instance.
      */
     public modal: Modal|null;
 
     /**
-     * OnKeyUp Event Listener
+     * The gallery id.
      */
-    private onKeyUpListener: EventListener;
+    public galleryId: string|null = null;
 
     /**
-     * Create a new Lightbox instance
-     * @param element A valid Lightbox HTMLElement.
-     * @param config Additional configuration, which should be applied on new Lightbox instances.
+     * Key-up event listener.
      */
-    public constructor(element: HTMLElement, config: Partial<LightboxConfig> = {}) {
-        let key = element.dataset.bsGallery || element.dataset.gallery || element;
-        if (Lightbox.instances.has(key)) {
-            throw new Error('An instance with the passed element or gallery has already been created.');
+    private _onKeyUpListener: EventListener;
+
+    /**
+     * Creates a new lightbox instance.
+     * @param element A valid lightbox element.
+     * @param config Additional configuration for the new instance.
+     */
+    public constructor(element: HTMLElement, config?: Partial<LightboxConfiguration>) {
+        const galleryId = Lightbox.getGalleryIdentifier(element);
+        if (galleryId && Lightbox.hasInstance(galleryId)) {
+            throw new Error('An instance with this gallery identifier already exists. Add it there or use a different identifier.');
+        } else if (!galleryId && Lightbox.hasInstance(element)) {
+            throw new Error('An instance with this element already exists.');
         }
-        Lightbox.instances.set(key, this);
+
+        // Set Gallery & Lightbox
+        if (galleryId) {
+            this.galleryId = galleryId;
+            Lightbox.galleryInstances.set(galleryId, this);
+        }
+        Lightbox.singleInstances.set(element, this);
 
         // Legacy Indicator
         this.legacy = Lightbox.CAROUSEL.VERSION[0] === '4';
@@ -246,20 +284,52 @@ export class Lightbox {
         // Merge Configuration
         let defaults = Lightbox.DEFAULTS;
         this.config = {
-            carousel: Object.assign({}, defaults.carousel, config.carousel || {}),
-            lightbox: Object.assign({}, defaults.lightbox, config.lightbox || {}),
-            modal: Object.assign({}, defaults.modal, config.modal || {})
+            carousel: Object.assign({}, defaults.carousel, config?.carousel || {}),
+            lightbox: Object.assign({}, defaults.lightbox, config?.lightbox || {}),
+            modal: Object.assign({}, defaults.modal, config?.modal || {})
         };
 
         // Append Element
         this.append(element);
 
         // Prepare Listeners
-        this.onKeyUpListener = this._onKeyUp.bind(this);
+        this._onKeyUpListener = this._onKeyUp.bind(this);
     }
 
     /**
-     * onKeyUp Event Listener
+     * Disposes the instance and its resources.
+     * @returns The current instance.
+     */
+    public dispose(): this {
+        document.removeEventListener('keyup', this._onKeyUpListener);
+
+        if (this.carousel) {
+            if (this.legacy) {
+                this.carousel.carousel('dispose');
+            } else {
+                this.carousel.dispose();
+            }
+            this.carousel = null;
+        }
+
+        if (this.modal) {
+            if (this.legacy) {
+                this.modal.modal('dispose');
+            } else {
+                this.modal.dispose();
+            }
+            this.modal = null;
+        }
+
+        if (this.lightbox && this.lightbox.parentElement) {
+            this.lightbox.remove();
+        }
+        this.lightbox = null;
+        return this;
+    }
+
+    /**
+     * Internal key-up handler.
      * @param event 
      */
     private _onKeyUp(event: KeyboardEvent) {
@@ -271,9 +341,9 @@ export class Lightbox {
     }
 
     /**
-     * Create Lightbox Element
+     * Creates the lightbox container.
      */
-    private _createLightbox() {
+    private _createLightbox(): HTMLElement {
 
         // Carousel Controls
         let controls = '';
@@ -308,14 +378,14 @@ export class Lightbox {
         lightbox.tabIndex = -1;
         lightbox.innerHTML = `
             <div id="${this.config.modal.id || 'lightboxModal'}" class="modal-dialog${this.config.modal.size !== null ? (' modal-' + this.config.modal.size) : ' '} modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content overflow-hidden">
                     <div class="modal-body p-0">
                         <div id="${this.config.carousel.id || 'lightboxCarousel'}" class="carousel carousel-fade slide">
                             ${indicators}
 
                             <div class="carousel-inner">
-                                ${Array.from(this.items.values()).map((item: LightboxItem, idx: number) => {
-                                    let source = item.image instanceof HTMLImageElement ? item.image.src : item.image.querySelector('img').src;
+                                ${Array.from(this.items.values()).map((item: LightboxElement, idx: number) => {
+                                    let source = item.image instanceof HTMLImageElement ? item.image.src : item.image.querySelector('img')?.src;
                                     return `
                                         <div class="carousel-item${idx === 0 ? ' active' : ''}">
                                             ${this.config.lightbox.loader? `
@@ -348,30 +418,29 @@ export class Lightbox {
             </div>
         `;
         
-
-        this.lightbox = lightbox;
+        return lightbox;
     }
 
     /**
-     * Create Modal instance
+     * Creates the modal instance.
      */
-    private _createModal() {
+    private _createModal(): any {
         if (this.lightbox === null) {
             return;
         }
 
         if (this.legacy) {
             let config = Object.assign({}, this.config.modal, { show: false });
-            this.modal = Lightbox.$(this.lightbox).modal(config);
+            return Lightbox.$(this.lightbox).modal(config);
         } else {
-            this.modal = Lightbox.MODAL.getOrCreateInstance(this.lightbox, this.config.modal) as Modal;
+            return Lightbox.MODAL.getOrCreateInstance(this.lightbox, this.config.modal) as Modal;
         }
     }
 
     /**
-     * Create Carousel instance
+     * Creates the carousel instance.
      */
-    private _createCarousel() {
+    private _createCarousel(): any {
         if (this.lightbox === null) {
             return;
         }
@@ -381,48 +450,16 @@ export class Lightbox {
             if (!config.ride) {
                 config.interval = false;
             }
-            this.carousel = Lightbox.$(this.lightbox.querySelector('.carousel')).carousel(config);
+            return Lightbox.$(this.lightbox.querySelector('.carousel')).carousel(config);
         } else {
-            this.carousel = Lightbox.CAROUSEL.getOrCreateInstance(this.lightbox.querySelector('.carousel'), this.config.carousel) as Carousel;
+            return Lightbox.CAROUSEL.getOrCreateInstance(this.lightbox.querySelector('.carousel'), this.config.carousel) as Carousel;
         }
     }
 
     /**
-     * Destroy Lightbox instance with all elements
-     * @returns Current Lightbox instance.
-     */
-    public dispose(): Lightbox {
-        document.removeEventListener('keyup', this.onKeyUpListener);
-
-        if (this.carousel) {
-            if (this.legacy) {
-                this.carousel.carousel('dispose');
-            } else {
-                this.carousel.dispose();
-            }
-            this.carousel = null;
-        }
-
-        if (this.modal) {
-            if (this.legacy) {
-                this.modal.modal('dispose');
-            } else {
-                this.modal.dispose();
-            }
-            this.modal = null;
-        }
-
-        if (this.lightbox && this.lightbox.parentElement) {
-            this.lightbox.remove();
-        }
-        this.lightbox = null;
-        return this;
-    }
-
-    /**
-     * Get Image from element
-     * @param source 
-     * @returns 
+     * Extracts the image element from a source node.
+     * @param source The originating element.
+     * @returns
      */
     private _getImage(source: HTMLElement): HTMLPictureElement | HTMLImageElement | null {
         if (source instanceof HTMLImageElement || source instanceof HTMLPictureElement) {
@@ -434,9 +471,9 @@ export class Lightbox {
     }
 
     /**
-     * Get Title from element
-     * @param source 
-     * @param image 
+     * Extracts the title from a source node or image.
+     * @param source The originating element.
+     * @param image The resolved image element.
      * @returns
      */
     private _getTitle(source: HTMLElement, image: HTMLPictureElement | HTMLImageElement): string | null {
@@ -448,9 +485,9 @@ export class Lightbox {
     }
 
     /**
-     * Get Caption from element
-     * @param source 
-     * @param image 
+     * Extracts the caption from a source node or image.
+     * @param source The originating element.
+     * @param image The resolved image element.
      * @returns
      */
     private _getCaption(source: HTMLElement, image: HTMLPictureElement | HTMLImageElement): string | null {
@@ -466,14 +503,15 @@ export class Lightbox {
             }
             return caption;
         }
+        return null;
     }
 
     /**
-     * Append Lightbox Item
-     * @param source Additional Lightbox element to append to this instance.
-     * @returns Current Lightbox instance.
+     * Appends an additional element to the lightbox.
+     * @param source The element to add.
+     * @returns The current instance.
      */
-    public append(source: HTMLElement): Lightbox {
+    public append(source: HTMLElement): this {
         if (this.items.has(source)) {
             return this;
         }
@@ -490,7 +528,10 @@ export class Lightbox {
             if (image instanceof HTMLImageElement) {
                 image.src = source.href;
             } else if (image instanceof HTMLPictureElement && this.config.lightbox.replacePictures) {
-                image.querySelector('img').src = source.href;
+                const temp = image.querySelector('img');
+                if (temp) {
+                    temp.src = source.href;
+                }
                 Array.from(image.querySelectorAll('source'), (e) => e.remove());
             }
         }
@@ -513,10 +554,10 @@ export class Lightbox {
     }
 
     /**
-     * Toggle Lightbox Modal
-     * @returns Current Lightbox instance.
+     * Toggles the lightbox modal.
+     * @returns The current instance.
      */
-    public toggle(): Lightbox {
+    public toggle(): this {
         if (this.lightbox) {
             return this.hide();
         } else {
@@ -525,26 +566,31 @@ export class Lightbox {
     }
 
     /**
-     * Show Lightbox Modal
-     * @param source 
-     * @returns Current Lightbox instance.
+     * Shows the lightbox modal.
+     * @param source The element to display, or null to show the first.
+     * @returns The current instance.
      */
-    public show(source: HTMLElement|null = null): Lightbox {
+    public show(source: HTMLElement|null = null): this {
         if (this.lightbox) {
             return this;
         }
-        this._createLightbox();
-        this._createModal();
-        this._createCarousel();
+        this.lightbox = this._createLightbox();
+        this.modal = this._createModal();
+        this.carousel = this._createCarousel();
 
         // Legacy Event Listeners
         if (this.legacy) {
             let events = [
-                'slid.bs.carousel',  'slide.bs.carousel',  'hide.bs.modal',  'hidden.bs.modal',  'hidePrevented.bs.modal',  'show.bs.modal',  'shown.bs.modal'
+                'slid.bs.carousel', 'slide.bs.carousel', 'hide.bs.modal', 'hidden.bs.modal', 'hidePrevented.bs.modal', 'show.bs.modal', 'shown.bs.modal'
             ];
             for (let id of events) {
-                (id.endsWith('modal') ? this.modal : this.carousel).on(id, (ev) => {
-                    (id.endsWith('modal')? this.lightbox: this.lightbox.querySelector('.carousel')).dispatchEvent(new Event(id, {
+                let isModal = id.endsWith('modal');
+                (isModal ? this.modal : this.carousel).on(id, (ev) => {
+                    let element = isModal ? this.lightbox : this.lightbox?.querySelector('.carousel');
+                    if (!element) {
+                        return;
+                    }
+                    element.dispatchEvent(new Event(id, {
                         bubbles: ev.bubbles,
                         cancelable: ev.cancelable,
                         composed: ev.composed
@@ -556,7 +602,7 @@ export class Lightbox {
         // Set Slide on Gallery
         if (source instanceof HTMLElement && (source.dataset.bsSlideTo || source.dataset.slideTo)) {
             this.lightbox.addEventListener('show.bs.modal', (ev) => {
-                let number = parseInt(source.dataset.bsSlideTo || source.dataset.slideTo, 10);
+                let number = parseInt(source.dataset?.bsSlideTo || source.dataset?.slideTo || '0', 10);
                 if (this.legacy) {
                     this.carousel.carousel(number);
                 } else {
@@ -568,31 +614,36 @@ export class Lightbox {
         // Attach Loader
         if (this.config.lightbox.loader) {
             this.lightbox.addEventListener('show.bs.modal', (ev) => {
+                if (!this.lightbox) {
+                    return;
+                }
                 Array.from(this.lightbox.querySelectorAll('[data-img-src]'), (el: HTMLElement) => {
                     let image = document.createElement('IMG') as HTMLImageElement;
                     image.className = 'w-100';
                     image.onload = (ev) => {
                         el.replaceWith(image);
                     };
-                    image.src = el.dataset.imgSrc;
+                    image.src = el.dataset?.imgSrc || '';
                 });
             });
         }
 
         // Attach Custom Events
         let carousel = this.lightbox.querySelector('.carousel');
-        for (let [event, set] of this.events.entries()) {
-            if (event.endsWith('modal')) {
-                set.forEach(c => this.lightbox.addEventListener(event, c));
-            }
-            if (event.endsWith('carousel')) {
-                set.forEach(c => carousel.addEventListener(event, c));
+        if (this.lightbox && carousel) {
+            for (let [event, set] of this.events.entries()) {
+                if (event.endsWith('modal')) {
+                    set.forEach(c => (this.lightbox as HTMLElement).addEventListener(event, c));
+                }
+                if (event.endsWith('carousel')) {
+                    set.forEach(c => carousel.addEventListener(event, c));
+                }
             }
         }
 
         // Attach Carousel Keyboard Controls
         if (this.config.carousel.keyboard) {
-            document.addEventListener('keyup', this.onKeyUpListener);
+            document.addEventListener('keyup', this._onKeyUpListener);
         }
 
         // Attach Dispose and show Modal
@@ -606,10 +657,10 @@ export class Lightbox {
     }
 
     /**
-     * Hide Lightbox Modal
-     * @returns Current Lightbox instance.
+     * Hides the lightbox modal.
+     * @returns The current instance.
      */
-    public hide(): Lightbox {
+    public hide(): this {
         if (this.modal) {
             if (this.legacy) {
                 this.modal.modal('hide');
@@ -621,10 +672,10 @@ export class Lightbox {
     }
 
     /**
-     * Cycle Lightbox Carousel
-     * @returns Current Lightbox instance.
+     * Starts automatic cycling of the carousel.
+     * @returns The current instance.
      */
-    public cycle(): Lightbox {
+    public cycle(): this {
         if (this.carousel) {
             if (this.legacy) {
                 this.carousel.carousel('cycle');
@@ -636,10 +687,10 @@ export class Lightbox {
     }
 
     /**
-     * Go to next slide on Lightbox Carousel
-     * @returns Current Lightbox instance.
+     * Moves to the next carousel slide.
+     * @returns The current instance.
      */
-    public next(): Lightbox {
+    public next(): this {
         if (this.carousel) {
             if (this.legacy) {
                 this.carousel.carousel('next');
@@ -651,10 +702,10 @@ export class Lightbox {
     }
 
     /**
-     * Go to previous slide on Lightbox Carousel
-     * @returns Current Lightbox instance.
+     * Moves to the previous carousel slide.
+     * @returns The current instance.
      */
-    public prev(): Lightbox {
+    public prev(): this {
         if (this.carousel) {
             if (this.legacy) {
                 this.carousel.carousel('prev');
@@ -666,12 +717,11 @@ export class Lightbox {
     }
 
     /**
-     * Go to a specific slide on Lightbox Carousel
-     * @param direction A specific slide number (starting from 0) or the string 'next', 'prev' or 
-     *                  'previous'.
-     * @returns Current Lightbox instance.
+     * Navigates to a specific slide.
+     * @param direction A slide index (from 0) or 'next', 'prev', 'previous'.
+     * @returns The current instance.
      */
-    public to(direction: number | 'prev' | 'previous' | 'next'): Lightbox {
+    public to(direction: number | 'prev' | 'previous' | 'next'): this {
         if (!this.carousel) {
             return this;
         }
@@ -691,36 +741,39 @@ export class Lightbox {
     }
 
     /**
-     * Attach Event Handler for lightbox, modal or carousel.
-     * @param event The desired and supported modal or carousel event name.
-     * @param caller The event listener callback function to add.
-     * @returns Current Lightbox instance.
+     * Attaches an event listener.
+     * @param event The supported event name.
+     * @param caller The callback function.
+     * @returns The current instance.
      */
-    public on(event: LightboxEventNames, caller: EventListener): Lightbox {
+    public on(event: LightboxEvents, caller: EventListener): this {
         if (!this.events.has(event)) {
             this.events.set(event, new Set);
         }
-        this.events.get(event).add(caller);
+        this.events.get(event)?.add(caller);
         return this;
     }
 
     /**
-     * Detach Event Handler from lightbox, modal or carousel.
-     * @param event The desired and supported modal or carousel event name.
-     * @param caller The event listener callback function to remove.
-     * @returns Current Lightbox instance.
+     * Detaches an event listener.
+     * @param event The supported event name.
+     * @param caller The previously attached listener.
+     * @returns The current instance.
      */
-    public off(event: LightboxEventNames, caller: EventListener): Lightbox {
+    public off(event: LightboxEvents, caller: EventListener): this {
         if (this.events.has(event)) {
-            this.events.get(event).delete(caller);
+            this.events.get(event)?.delete(caller);
         }
         
         if (this.lightbox && event.endsWith('modal')) {
             this.lightbox.removeEventListener(event, caller);
         }
         if (this.lightbox && event.endsWith('carousel')) {
-            this.lightbox.querySelector('.carousel').removeEventListener(event, caller);
+            this.lightbox.querySelector('.carousel')?.removeEventListener(event, caller);
         }
         return this;
     }
 }
+
+///@ts-ignore
+const _staticLightboxCheck: LightboxStatic = Lightbox;

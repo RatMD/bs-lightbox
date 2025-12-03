@@ -1,9 +1,14 @@
 Bootstrap Lightbox / Changelog
 ==============================
 
-## Version 1.2.0 (Stable)
+## Version 2.0.0 (Stable)
 - Add: Replace rollup bundle set-up with vite.
-- Update: `package.json`.
+- Add: Separate `singleInstances` and `galleryInstances`, to better access using either element or gallery identifier.
+- Update: `package.json` dependencies.
+- Update: Clean-Up typings & remove namespace construct.
+- Update: Use `overflow-hidden` on `.modal-content` to keep the border-radius.
+- Fix: Typings.
+- Fix: Prevent adding existing elements to other instances using `invoke()`.
 
 ## Version 1.1.1 (Stable)
 - Update: Dependencies (+ move from `rollup-plugin-terser` to `@rollup/plugin-terser`).

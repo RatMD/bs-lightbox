@@ -16,7 +16,7 @@ bespoke styling on you. Lucky you!
 - **Free to use** and written in clean **TypeScript**
 
 ## Installation
-Download the latest release of **@rat.md/bs-lightbox** from the [official GitHub release page](https://github.com/RatMD/bs-lightbox/releases),  
+Download the latest release of **@rat.md/bs-lightbox** from the [official GitHub release page](https://github.com/RatMD/bs-lightbox/releases),
 or install it via npm:
 
 ```sh

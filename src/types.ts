@@ -1,34 +1,22 @@
-
-export interface LightboxItem {
-    source: HTMLElement;
-    image: HTMLImageElement | HTMLPictureElement;
-    title: string;
-    caption: string;
-}
-
-export type LightboxEventNames_Carousel = 'slid.bs.carousel' | 'slide.bs.carousel';
-export type LightboxEventNames_Lightbox = '';
-export type LightboxEventNames_Modal = 'hide.bs.modal' | 'hidden.bs.modal' | 'hidePrevented.bs.modal' | 'show.bs.modal' | 'shown.bs.modal';
-
-export type LightboxEventNames = LightboxEventNames_Carousel | LightboxEventNames_Modal;
-
-
-export interface CarouselConfig {
-
+/**
+ * Bootstrap Carousel Configuration Options
+ * @see https://getbootstrap.com/docs/5.3/components/carousel/#options
+ */
+export interface BootstrapCarouselConfig {
     /**
-     * A unique ID for the created Carousel.
+     * A unique ID for the created bootstrap carousel.
      * @type {string|null}
      */
     id: string | null;
 
     /**
-     * Whether to show or hide the native carousel control actions.
+     * Whether to show or hide the bootstrap carousel control actions.
      * @type {boolean}
      */
     controls: boolean;
     
     /**
-     * Whether to show or hide the native carousel indicators.
+     * Whether to show or hide the bootstrap carousel indicators.
      * @type {boolean}
      */
     indicators: boolean;
@@ -71,13 +59,15 @@ export interface CarouselConfig {
      * @type {boolean}
      */
     wrap: boolean;
-
 }
 
-export interface ModalConfig {
-
+/**
+ * Bootstrap Modal Configuration Options
+ * @see https://getbootstrap.com/docs/5.3/components/modal/#options
+ */
+export interface BootstrapModalConfig {
     /**
-     * A unique ID for the created Modal.
+     * A unique ID for the created bootstrap modal.
      * @type {string|null}
      */
     id: string | null;
@@ -107,266 +97,299 @@ export interface ModalConfig {
      * @type {null|string}
      */
     size: null | 'sm' | 'lg' | 'xl' | 'fullscreen';
-
 }
 
-export interface LightboxConfig {
-    carousel: CarouselConfig;
-    lightbox: {
+/**
+ * Configuration options for @rat.md/bs-lightbox.
+ */
+export interface BootstrapLightboxConfig {
+    /**
+     * Enables a pre-loader for individual carousel items.
+     */
+    loader: boolean;
 
-        /**
-         * Add Pre-Loader for the single Carousel Items
-         * @type {boolean}
-         */
-        loader: boolean;
-
-        /**
-         * Replace Image Source on <picture> tags
-         * @type {boolean}
-         */
-        replacePictures: boolean;
-
-    },
-    modal: ModalConfig;
+    /**
+     * Replaces the image source within <picture> elements.
+     */
+    replacePictures: boolean;
 }
 
-export declare module Lightbox {
-    
+/**
+ * Combined configuration object.
+ */
+export interface LightboxConfiguration {
     /**
-     * Get Component Name
+     * Bootstrap Carousel configuration.
      */
-    export var NAME: string;
-
-    /**
-     * Get Component Version
-     */
-    export var VERSION: string;
+    carousel: BootstrapCarouselConfig;
 
     /**
-     * Get default Configuration
+     * Lightbox configuration.
      */
-    export var DEFAULTS: LightboxConfig;
+    lightbox: BootstrapLightboxConfig;
 
     /**
-     * Get/Set jQuery Prototype / Object
+     * Bootstrap Modal configuration.
      */
-    export var $: unknown;
+    modal: BootstrapModalConfig;
+}
+
+/**
+ * Represents a single @rat.md/bs-lightbox element.
+ */
+export interface LightboxElement {
+    /**
+     * The original HTML element.
+     */
+    source: HTMLElement;
 
     /**
-     * Get/Set Bootstrap Carousel Prototype / Object
+     * The associated <img> or <picture> element.
      */
-    export var CAROUSEL: unknown;
+    image: HTMLImageElement | HTMLPictureElement;
 
     /**
-     * Get/Set Bootstrap Modal Prototype / Object
+     * Optional lightbox title.
      */
-    export var MODAL: unknown;
+    title?: string | null;
 
     /**
-     * Get default Lightbox Selector
+     * Optional lightbox caption.
      */
-    export var SELECTOR: string;
+    caption?: string | null;
+}
+
+/**
+ * Bootstrap Carousel event names.
+ */
+export type BootstrapCarouselEvents =
+    'slid.bs.carousel' |
+    'slide.bs.carousel';
+
+/**
+ * Lightbox event names.
+ */
+export type BootstrapLightboxEvents =
+    'show.rat.lightbox' |
+    'shown.rat.lightbox' |
+    'hide.rat.lightbox' |
+    'hidden.rat.lightbox' |
+    'preload.rat.lightbox' |
+    'preloaded.rat.lightbox';
+
+/**
+ * Bootstrap Modal event names.
+ */
+export type BootstrapModalEvents =
+    'hide.bs.modal' |
+    'hidden.bs.modal' |
+    'hidePrevented.bs.modal' |
+    'show.bs.modal' |
+    'shown.bs.modal';
+
+/**
+ * All supported event names.
+ */
+export type LightboxEvents = BootstrapCarouselEvents | BootstrapLightboxEvents | BootstrapModalEvents;
+
+/**
+ * Lightbox prototype instance.
+ */
+export interface LightboxInstance {
+    /**
+     * Instance configuration.
+     */
+    config: LightboxConfiguration;
 
     /**
-     * Available Lightbox instances, grouped by gallery string or element
+     * True for Bootstrap 4 mode, false for Bootstrap 5.
      */
-    export var instances: Map<string|HTMLElement, LightboxInstance>;
+    legacy: boolean;
 
     /**
-     * Invoke Lightbox Elements
-     * @param selector A custom selector or null to use the default one.
-     * @param config Additional configuration, which should be applied on new Lightbox instances.
-     * @returns The Lightbox instances, based on the found NodeList.
+     * Collection of lightbox items.
      */
-    export function invoke(selector?: null|string, config?: Partial<LightboxConfig>): LightboxInstance[];
+    items: Map<HTMLElement, LightboxElement>;
 
     /**
-     * Check if instance exists, based on an HTML element or gallery string
-     * @param source A valid Lightbox HTMLElement candidate, or the gallery string.
-     * @returns True when an instance exists, False otherwise
+     * Registered event listeners.
      */
-    export function hasInstance(source: HTMLElement|string): boolean;
+    events: Map<LightboxEvents, Set<EventListener>>;
 
     /**
-     * Get instance, based on am HTMLElement or gallery string
-     * @param source A valid Lightbox HTMLElement candidate, or the gallery string.
-     * @returns The Lightbox instance on success, null otherwise.
+     * Root lightbox container element.
      */
-    export function getInstance(source: HTMLElement|string): LightboxInstance|null;
+    lightbox: HTMLElement | null;
 
     /**
-     * Create a new instance or get an existing one
-     * @param element A valid Lightbox HTMLElement.
-     * @param config Additional configuration, which should be applied on new Lightbox instances.
-     * @returns The new or an existing Lightbox instance.
+     * Bootstrap Carousel instance.
      */
-    export function getOrCreateInstance(element: HTMLElement, config?: Partial<LightboxConfig>): LightboxInstance;
+    carousel: unknown;
 
     /**
-     * Create a new Lightbox instance
-     * @param element A valid Lightbox HTMLElement.
-     * @param config Additional configuration, which should be applied on new Lightbox instances.
+     * Bootstrap Modal instance.
      */
-    export function constructor(element: HTMLElement, config?: Partial<LightboxConfig>): LightboxInstance;
+    modal: unknown;
 
-    export class LightboxInstance {
+    /**
+     * Disposes the instance and its resources.
+     * @returns The current instance.
+     */
+    dispose(): this;
 
-        /**
-         * Lightbox instance configuration
-         */
-        public config: LightboxConfig;
+    /**
+     * Appends an additional element to the lightbox.
+     * @param source The element to add.
+     * @returns The current instance.
+     */
+    append(source: HTMLElement): this;
 
-        /**
-         * Legacy indicator, True -> Bootstrap 4, False -> Bootstrap 5
-         */
-        public legacy: boolean;
+    /**
+     * Toggles the lightbox modal.
+     * @returns The current instance.
+     */
+    toggle(): this;
 
-        /**
-         * Lightbox Items Map
-         */
-        public items: Map<HTMLElement, LightboxItem>;
+    /**
+     * Shows the lightbox modal.
+     * @param source The element to display, or null to show the first.
+     * @returns The current instance.
+     */
+    show(source: HTMLElement | null): this;
 
-        /**
-         * Configured Events
-         */
-        public events: Map<LightboxEventNames, Set<EventListener>>;
+    /**
+     * Hides the lightbox modal.
+     * @returns The current instance.
+     */
+    hide(): this;
 
-        /**
-         * Root Lightbox Container
-         */
-        public lightbox: HTMLElement|null;
+    /**
+     * Starts automatic cycling of the carousel.
+     * @returns The current instance.
+     */
+    cycle(): this;
 
-        /**
-         * Bootstrap Carousel instance
-         */
-        public carousel: unknown;
+    /**
+     * Moves to the next carousel slide.
+     * @returns The current instance.
+     */
+    next(): this;
 
-        /**
-         * Bootstrap Modal instance
-         */
-        public modal: unknown;
+    /**
+     * Moves to the previous carousel slide.
+     * @returns The current instance.
+     */
+    prev(): this;
 
-        /**
-         * OnKeyUp Event Listener
-         */
-        private onKeyUpListener: EventListener;
+    /**
+     * Navigates to a specific slide.
+     * @param direction A slide index (from 0) or 'next', 'prev', 'previous'.
+     * @returns The current instance.
+     */
+    to(direction: number | 'prev' | 'previous' | 'next'): this;
 
-        /**
-         * onKeyUp Event Listener
-         * @param event 
-         */
-        private _onKeyUp(event: KeyboardEvent): void;
+    /**
+     * Attaches an event listener.
+     * @param event The supported event name.
+     * @param caller The callback function.
+     * @returns The current instance.
+     */
+    on(event: LightboxEvents, caller: EventListener): this;
 
-        /**
-         * Create Lightbox Element
-         */
-        private _createLightbox(): void;
+    /**
+     * Detaches an event listener.
+     * @param event The supported event name.
+     * @param caller The previously attached listener.
+     * @returns The current instance.
+     */
+    off(event: LightboxEvents, caller: EventListener): this;
+}
 
-        /**
-         * Create Modal instance
-         */
-        private _createModal(): void;
+/**
+ * Lightbox prototype statics.
+ */
+export interface LightboxStatic {
+    /**
+     * Component name.
+     */
+    readonly NAME: string;
 
-        /**
-         * Create Carousel instance
-         */
-        private _createCarousel(): void;
+    /**
+     * Component version.
+     */
+    readonly VERSION: string;
 
-        /**
-         * Get Image from element
-         * @param source 
-         * @returns 
-         */
-        private _getImage(source: HTMLElement): HTMLPictureElement | HTMLImageElement | null;
+    /**
+     * Default Lightbox configuration.
+     */
+    readonly DEFAULTS: LightboxConfiguration;
 
-        /**
-         * Get Title from element
-         * @param source 
-         * @param image 
-         * @returns
-         */
-        private _getTitle(source: HTMLElement, image: HTMLPictureElement | HTMLImageElement): string | null;
+    /**
+     * jQuery prototype or object reference.
+     */
+    $: unknown;
 
-        /**
-         * Get Caption from element
-         * @param source 
-         * @param image 
-         * @returns
-         */
-        private _getCaption(source: HTMLElement, image: HTMLPictureElement | HTMLImageElement): string | null;
+    /**
+     * Bootstrap Carousel prototype or object reference.
+     */
+    CAROUSEL: unknown;
 
-        /**
-         * Destroy Lightbox instance with all elements
-         * @returns Current Lightbox instance.
-         */
-        public dispose(): LightboxInstance;
+    /**
+     * Bootstrap Modal prototype or object reference.
+     */
+    MODAL: unknown;
 
-        /**
-         * Append Lightbox Item
-         * @param source Additional Lightbox element to append to this instance.
-         * @returns Current Lightbox instance.
-         */
-        public append(source: HTMLElement): LightboxInstance;
+    /**
+     * Default lightbox selector.
+     */
+    SELECTOR: string;
 
-        /**
-         * Toggle Lightbox Modal
-         * @returns Current Lightbox instance.
-         */
-        public toggle(): LightboxInstance;
+    /**
+     * Registered lightbox instances, grouped by gallery identifier or originating element.
+     */
+    instances: Map<string | HTMLElement, LightboxInstance>;
 
-        /**
-         * Show Lightbox Modal
-         * @param source 
-         * @returns Current Lightbox instance.
-         */
-        public show(source: HTMLElement|null): LightboxInstance;
+    /**
+     * Detects the gallery identifier from the given element.
+     * @param source 
+     * @returns 
+     */
+    getGalleryIdentifier(source: HTMLElement): string|null;
 
-        /**
-         * Hide Lightbox Modal
-         * @returns Current Lightbox instance.
-         */
-        public hide(): LightboxInstance;
+    /**
+     * Initializes lightbox elements.
+     * @param selector A custom selector, or null to use the default.
+     * @param config Additional configuration for new instances.
+     * @returns An array of created or existing instances.
+     */
+    invoke(selector?: null | string, config?: Partial<LightboxConfiguration>): LightboxInstance[];
 
-        /**
-         * Cycle Lightbox Carousel
-         * @returns Current Lightbox instance.
-         */
-        public cycle(): LightboxInstance;
+    /**
+     * Checks whether an instance exists for a given element or gallery key.
+     * @param sourceOrGalleryId A valid lightbox element or gallery identifier.
+     * @returns True if an instance exists.
+     */
+    hasInstance(sourceOrGalleryId: HTMLElement | string): boolean;
 
-        /**
-         * Go to next slide on Lightbox Carousel
-         * @returns Current Lightbox instance.
-         */
-        public next(): LightboxInstance;
+    /**
+     * Retrieves an existing instance for an element or gallery key.
+     * @param sourceOrGalleryId A valid lightbox element or gallery identifier.
+     * @returns The instance if found, otherwise null.
+     */
+    getInstance(sourceOrGalleryId: HTMLElement | string): LightboxInstance | null;
 
-        /**
-         * Go to previous slide on Lightbox Carousel
-         * @returns Current Lightbox instance.
-         */
-        public prev(): LightboxInstance;
+    /**
+     * Returns an existing instance or creates a new one.
+     * @param element A valid lightbox element.
+     * @param config Additional configuration for new instances.
+     * @returns The created or existing instance.
+     */
+    getOrCreateInstance(element: HTMLElement, config?: Partial<LightboxConfiguration>): LightboxInstance;
 
-        /**
-         * Go to a specific slide on Lightbox Carousel
-         * @param direction A specific slide number (starting from 0) or the string 'next', 'prev' or 
-         *                  'previous'.
-         * @returns Current Lightbox instance.
-         */
-        public to(direction: number | 'prev' | 'previous' | 'next'): LightboxInstance;
-
-        /**
-         * Attach Event Handler for lightbox, modal or carousel.
-         * @param event The desired and supported modal or carousel event name.
-         * @param caller The event listener callback function to add.
-         * @returns Current Lightbox instance.
-         */
-        public on(event: LightboxEventNames, caller: EventListener): LightboxInstance;
-
-        /**
-         * Detach Event Handler from lightbox, modal or carousel.
-         * @param event The desired and supported modal or carousel event name.
-         * @param caller The event listener callback function to remove.
-         * @returns Current Lightbox instance.
-         */
-        public off(event: LightboxEventNames, caller: EventListener): LightboxInstance;
-    }
+    /**
+     * Creates a new lightbox instance.
+     * @param element A valid lightbox element.
+     * @param config Additional configuration for the new instance.
+     */
+    new (element: HTMLElement, config?: Partial<LightboxConfiguration>): LightboxInstance;
 }
