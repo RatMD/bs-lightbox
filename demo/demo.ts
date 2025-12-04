@@ -9,21 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainExamples = Lightbox.invoke();
     
     const example = mainExamples[0];
-    example.on('slid.bs.carousel', () => console.log('slid.bs.carousel'));
-    example.on('slide.bs.carousel', () => console.log('slide.bs.carousel'));
 
-    example.on('show.rat.lightbox', () => console.log('show.rat.lightbox'));
-    example.on('shown.rat.lightbox', () => console.log('shown.rat.lightbox'));
-    example.on('hide.rat.lightbox', () => console.log('hide.rat.lightbox'));
-    example.on('hidden.rat.lightbox', () => console.log('hidden.rat.lightbox'));
-    example.on('preload.rat.lightbox', () => console.log('preload.rat.lightbox'));
-    example.on('preloaded.rat.lightbox', () => console.log('preloaded.rat.lightbox'));
-    
-    example.on('hide.bs.modal', () => console.log('hide.bs.modal'));
-    example.on('hidden.bs.modal', () => console.log('hidden.bs.modal'));
-    example.on('hidePrevented.bs.modal', () => console.log('hidePrevented.bs.modal'));
-    example.on('show.bs.modal', () => console.log('show.bs.modal'));
-    example.on('shown.bs.modal', () => console.log('shown.bs.modal'));
+    example.on('show.rat.lightbox', (...args) => console.log('show.rat.lightbox', args));
+    example.on('shown.rat.lightbox', (...args) => console.log('shown.rat.lightbox', args));
+    example.on('hide.rat.lightbox', (...args) => console.log('hide.rat.lightbox', args));
+    example.on('hidden.rat.lightbox', (...args) => console.log('hidden.rat.lightbox', args));
+    example.on('slide.rat.lightbox', (...args) => console.log('slide.rat.lightbox', args));
+    example.on('slid.rat.lightbox', (...args) => console.log('slid.rat.lightbox', args));
+    example.on('preload.rat.lightbox', (...args) => console.log('preload.rat.lightbox', args));
+    example.on('preloaded.rat.lightbox', (...args) => console.log('preloaded.rat.lightbox', args));
 });
 
 /**

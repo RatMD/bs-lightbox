@@ -51,6 +51,7 @@ export class Lightbox implements LightboxInstance {
             lightbox: {
                 closeButton: true,
                 loader: false,
+                imageClassNames: 'w-100',
                 replacePictures: false
             },
             modal: {
@@ -255,6 +256,11 @@ export class Lightbox implements LightboxInstance {
      * The gallery id.
      */
     public galleryId: string|null = null;
+
+    /**
+     * Internal events skipping.
+     */
+    private _internalEvents: LightboxEvents[] = [];
 
     /**
      * Key-up event listener.
@@ -483,10 +489,15 @@ export class Lightbox implements LightboxInstance {
 
         let clone = this._getImage(original);
         if (clone === null) {
-            throw new Error(`The passed element is not nor contains a supported image original. Element HTML: ${original.outerHTML}.`);
+            throw new Error(`The passed element is not nor contains a supported image element. Element HTML: ${original.outerHTML}.`);
         }
+        
         let root = clone.cloneNode(true) as HTMLImageElement | HTMLPictureElement;
-        root.className = 'w-100';
+        if (typeof this.config.lightbox.imageClassNames === 'function') {
+            root.className = this.config.lightbox.imageClassNames(original, root);
+        } else {
+            root.className = `${root.className} ${this.config.lightbox.imageClassNames}`.trim();
+        }
 
         // Change URL on <img /> tags
         let src;
@@ -545,30 +556,10 @@ export class Lightbox implements LightboxInstance {
         this.modal = this._createModal();
         this.carousel = this._createCarousel();
 
-        // Legacy Event Listeners
-        if (this.legacy) {
-            let events = [
-                'slid.bs.carousel', 'slide.bs.carousel', 'hide.bs.modal', 'hidden.bs.modal', 'hidePrevented.bs.modal', 'show.bs.modal', 'shown.bs.modal'
-            ];
-            for (let id of events) {
-                let isModal = id.endsWith('modal');
-                (isModal ? this.modal : this.carousel).on(id, (ev) => {
-                    let element = isModal ? this.lightbox : this.lightbox?.querySelector('.carousel');
-                    if (!element) {
-                        return;
-                    }
-                    element.dispatchEvent(new Event(id, {
-                        bubbles: ev.bubbles,
-                        cancelable: ev.cancelable,
-                        composed: ev.composed
-                    }));
-                });
-            }
-        }
-
         // Set Slide on Gallery
         if (source instanceof HTMLElement && (source.dataset.bsSlideTo || source.dataset.slideTo)) {
             this.lightbox.addEventListener('show.bs.modal', (ev) => {
+                this._internalEvents = ['slide.rat.lightbox', 'slid.rat.lightbox'];
                 let number = parseInt(source.dataset?.bsSlideTo || source.dataset?.slideTo || '0', 10);
                 if (this.legacy) {
                     this.carousel.carousel(number);
@@ -589,23 +580,37 @@ export class Lightbox implements LightboxInstance {
                     image.className = 'w-100';
                     image.onload = (ev) => {
                         el.replaceWith(image);
+                        
+                        let event = new CustomEvent('preloaded.rat.lightbox', { 
+                            detail: { element: el, image, }
+                        });
+                        this.dispatch('preloaded.rat.lightbox', event);
                     };
                     image.src = el.dataset?.imgSrc || '';
+
+                    let event = new CustomEvent('preload.rat.lightbox', { 
+                        detail: { element: el, image, }
+                    });
+                    this.dispatch('preload.rat.lightbox', event);
                 });
             });
         }
 
         // Attach Custom Events
-        let carousel = this.lightbox.querySelector('.carousel');
-        if (this.lightbox && carousel) {
-            for (let [event, set] of this.events.entries()) {
-                if (event.endsWith('modal')) {
-                    set.forEach(c => (this.lightbox as HTMLElement).addEventListener(event, c));
-                }
-                if (event.endsWith('carousel')) {
-                    set.forEach(c => carousel.addEventListener(event, c));
-                }
-            }
+        if (this.legacy) {
+            this.modal.on('show.bs.modal', this.dispatch.bind(this, 'show.rat.lightbox'));
+            this.modal.on('shown.bs.modal', this.dispatch.bind(this, 'shown.rat.lightbox'));
+            this.modal.on('hide.bs.modal', this.dispatch.bind(this, 'hide.rat.lightbox'));
+            this.modal.on('hidden.bs.modal', this.dispatch.bind(this, 'hidden.rat.lightbox'));
+            this.carousel.on('slide.bs.carousel', this.dispatch.bind(this, 'slide.rat.lightbox'));
+            this.carousel.on('slid.bs.carousel', this.dispatch.bind(this, 'slid.rat.lightbox'));
+        } else {
+            this.modal._element.addEventListener('show.bs.modal', this.dispatch.bind(this, 'show.rat.lightbox'));
+            this.modal._element.addEventListener('shown.bs.modal', this.dispatch.bind(this, 'shown.rat.lightbox'));
+            this.modal._element.addEventListener('hide.bs.modal', this.dispatch.bind(this, 'hide.rat.lightbox'));
+            this.modal._element.addEventListener('hidden.bs.modal', this.dispatch.bind(this, 'hidden.rat.lightbox'));
+            this.carousel._element.addEventListener('slide.bs.carousel', this.dispatch.bind(this, 'slide.rat.lightbox'));
+            this.carousel._element.addEventListener('slid.bs.carousel', this.dispatch.bind(this, 'slid.rat.lightbox'));
         }
 
         // Attach Carousel Keyboard Controls
@@ -708,35 +713,48 @@ export class Lightbox implements LightboxInstance {
     }
 
     /**
+     * Dispatch an event.
+     * @param eventName The supported event name.
+     * @param event The original event.
+     * @returns
+     */
+    public dispatch(eventName: LightboxEvents, event: Event) {
+        let idx = this._internalEvents.indexOf(eventName);
+        if (idx >= 0) {
+            this._internalEvents.splice(idx, 1);
+            return;
+        }
+
+        const ratEvent = new CustomEvent('eventName', { detail: { originalEvent: event } });
+        let events = this.events.get(eventName);
+        if (events) {
+            events.forEach((cb) => cb(ratEvent));
+        }
+    }
+
+    /**
      * Attaches an event listener.
-     * @param event The supported event name.
+     * @param eventName The supported event name.
      * @param caller The callback function.
      * @returns The current instance.
      */
-    public on(event: LightboxEvents, caller: EventListener): this {
-        if (!this.events.has(event)) {
-            this.events.set(event, new Set);
+    public on(eventName: LightboxEvents, caller: EventListener): this {
+        if (!this.events.has(eventName)) {
+            this.events.set(eventName, new Set);
         }
-        this.events.get(event)?.add(caller);
+        this.events.get(eventName)?.add(caller);
         return this;
     }
 
     /**
      * Detaches an event listener.
-     * @param event The supported event name.
+     * @param eventName The supported event name.
      * @param caller The previously attached listener.
      * @returns The current instance.
      */
-    public off(event: LightboxEvents, caller: EventListener): this {
-        if (this.events.has(event)) {
-            this.events.get(event)?.delete(caller);
-        }
-        
-        if (this.lightbox && event.endsWith('modal')) {
-            this.lightbox.removeEventListener(event, caller);
-        }
-        if (this.lightbox && event.endsWith('carousel')) {
-            this.lightbox.querySelector('.carousel')?.removeEventListener(event, caller);
+    public off(eventName: LightboxEvents, caller: EventListener): this {
+        if (this.events.has(eventName)) {
+            this.events.get(eventName)?.delete(caller);
         }
         return this;
     }

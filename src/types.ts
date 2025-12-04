@@ -114,6 +114,11 @@ export interface BootstrapLightboxConfig {
     loader: boolean;
 
     /**
+     * Additional class names used on the <img /> | <picture /> element used on the corresponding slide.
+     */
+    imageClassNames: string | ((original: HTMLElement, image: HTMLImageElement|HTMLPictureElement) => string);
+
+    /**
      * Replaces the image source within <picture> elements.
      */
     replacePictures: boolean;
@@ -216,17 +221,6 @@ export type BootstrapCarouselEvents =
     'slide.bs.carousel';
 
 /**
- * Lightbox event names.
- */
-export type BootstrapLightboxEvents =
-    'show.rat.lightbox' |
-    'shown.rat.lightbox' |
-    'hide.rat.lightbox' |
-    'hidden.rat.lightbox' |
-    'preload.rat.lightbox' |
-    'preloaded.rat.lightbox';
-
-/**
  * Bootstrap Modal event names.
  */
 export type BootstrapModalEvents =
@@ -237,9 +231,17 @@ export type BootstrapModalEvents =
     'shown.bs.modal';
 
 /**
- * All supported event names.
+ * Lightbox event names.
  */
-export type LightboxEvents = BootstrapCarouselEvents | BootstrapLightboxEvents | BootstrapModalEvents;
+export type LightboxEvents = 
+    'show.rat.lightbox' |
+    'shown.rat.lightbox' |
+    'slide.rat.lightbox' |
+    'slid.rat.lightbox' |
+    'hide.rat.lightbox' |
+    'hidden.rat.lightbox' |
+    'preload.rat.lightbox' |
+    'preloaded.rat.lightbox';
 
 /**
  * Lightbox prototype instance.

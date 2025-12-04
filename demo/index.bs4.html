@@ -16,12 +16,12 @@
 </head>
 <body>
     <header data-bs-theme="dark" class="text-white" style="--bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);background-color: #212529;background-image: radial-gradient(circle, rgba(var(--bs-tertiary-bg-rgb), 0.35) 1px, rgba(0, 0, 0, 0) 1px);background-size: 1rem 1rem;">
-        <div class="container py-4">
-            <nav class="navbar navbar-expand-lg rounded-lg py-1 px-3 shadow-sm" style="background-color:#161719;">
+        <div class="container-fluid py-4" style="max-width:1320px;">
+            <nav class="navbar navbar-dark navbar-expand-lg rounded-lg py-1 px-3 shadow-sm" style="background-color:#161719;">
                 <a href="https://ratmd.github.io/bs-lightbox" class="navbar-brand d-flex align-items-center">
                     <img src="/assets/rat-logo.svg" width="36px" height="36px" />
                     <span class="ml-2">/ bs-lightbox</span>
-                    <span class="badge text-bg-danger rounded-pill ml-2" style="font-size:12px;">2.0.0</span>
+                    <span class="badge bg-danger text-white rounded-pill ml-2" style="font-size:12px;">2.0.0</span>
                 </a>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -37,7 +37,7 @@
                         <li class="nav-item">
                             <a href="/docs.html" class="nav-link">Documentation</a>
                         </li>
-                        <li class="nav-item border-end my-2 mx-2"></li>
+                        <li class="nav-item border-right my-2 mx-2"></li>
                         <li class="nav-item">
                             <a href="https://github.com/RatMD/bs-lightbox" class="nav-link mb-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
@@ -55,7 +55,7 @@
                     </div>
                     <div class="px-2 mt-2 d-flex flex-row align-items-center">
                         <div class="shadow-sm d-flex flex-row rounded">
-                            <pre class="border-end border-dark m-0"><code class="language-bash rounded-left py-2 bg-secondary-subtle" style="height:38px">npm i @rat.md/bs-lightbox</code></pre>
+                            <pre class="border-right border-dark m-0"><code class="language-bash rounded-left py-2 bg-secondary-subtle" style="height:38px">npm i @rat.md/bs-lightbox</code></pre>
                             <button type="button" data-action="copy" data-content="npm i @rat.md/bs-lightbox" class="btn btn-sm rounded-start-0 rounded-end bg-secondary-subtle py-0 px-23" style="height:38px;line-height:0;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16" style="margin-top:-2px;">
                                     <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
@@ -105,7 +105,7 @@
     </header>
 
     <main class="py-4">
-        <div class="container">
+        <div class="container-fluid" style="max-width:1320px;">
             <div class="row justify-content-between">
                 <article class="col-8">
                     <div class="d-flex flex-row align-items-start">
@@ -189,7 +189,7 @@
     </main>
 
     <footer>
-        <div class="container">
+        <div class="container-fluid" style="max-width:1320px;">
             <hr class="mt-5 mb-3" />
 
             <div class="px-3 d-flex flex-row justify-content-between" style="font-size:12px;">

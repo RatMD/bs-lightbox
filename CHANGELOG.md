@@ -4,9 +4,13 @@ Bootstrap Lightbox / Changelog
 ## Version 2.0.0 (Stable)
 - Add: Replace rollup bundle set-up with vite.
 - Add: Separate `singleInstances` and `galleryInstances`, to better access using either element or gallery identifier.
+- Add: Trigger new lightbox related events, instead of carousel / modal events.
+- Add: New `lightbox.closeButton` option to show / hide a closing button as requested in [issue #2](https://github.com/RatMD/bs-lightbox/issues/2).
+- Add: New `lightbox.imageClassNames` option to add / replace the <img /> | <picture /> class names.
 - Update: `package.json` dependencies.
 - Update: Clean-Up typings & remove namespace construct.
 - Update: Use `overflow-hidden` on `.modal-content` to keep the border-radius.
+- Remove: `*.modal` / `*.carousel` events aren't supported through lightbox `.on()`.
 - Fix: Typings.
 - Fix: Prevent adding existing elements to other instances using `invoke()`.
 
